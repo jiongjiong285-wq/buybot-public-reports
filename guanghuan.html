@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>光环店买货流程近30天看板</title>
+  <style>
+    :root { color-scheme: light; --bg: #f3f6f7; --surface: #ffffff; --line: #dfe7ea; --text: #172026; --muted: #60717a; --done: #14723b; --done-bg: #e6f6eb; --risk: #a42121; --risk-bg: #fde9e9; --warn: #805400; --warn-bg: #fff3d6; }
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; color: var(--text); background: var(--bg); }
+    header { padding: 22px 28px 16px; background: var(--surface); border-bottom: 1px solid var(--line); }
+    h1 { margin: 0 0 8px; font-size: 24px; font-weight: 700; letter-spacing: 0; }
+    .meta { color: var(--muted); font-size: 14px; line-height: 1.5; }
+    .legend { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+    .legend span { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; color: var(--muted); }
+    .legend i { width: 10px; height: 10px; border-radius: 999px; display: inline-block; }
+    .legend .ok { background: var(--done); }
+    .legend .bad { background: var(--risk); }
+    .summary { display: flex; gap: 12px; flex-wrap: wrap; padding: 16px 28px; }
+    .summary span { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; }
+    main { padding: 0 28px 32px; }
+    .desktop-table { overflow-x: auto; }
+    table { width: 100%; min-width: 1180px; border-collapse: collapse; background: var(--surface); border: 1px solid var(--line); }
+    th, td { border-bottom: 1px solid #e8eef0; padding: 10px; text-align: left; vertical-align: top; font-size: 13px; }
+    th { position: sticky; top: 0; background: #edf3f5; z-index: 1; }
+    tr:hover { background: #fbfcfc; }
+    .step { border-radius: 6px; padding: 7px 8px; line-height: 1.35; min-width: 92px; overflow-wrap: anywhere; }
+    .done { background: var(--done-bg); color: var(--done); border: 1px solid #9bd8ad; }
+    .missing { background: var(--risk-bg); color: var(--risk); border: 1px solid #f3aaaa; }
+    .detail { display: block; margin-top: 4px; color: inherit; opacity: .82; }
+    .next { max-width: 260px; }
+    .empty { text-align: center; color: #5d6b73; padding: 32px; }
+    .mobile-orders { display: none; }
+    @media (max-width: 760px) {
+      body { background: #eef3f5; }
+      header { padding: 16px 14px 12px; }
+      h1 { font-size: 20px; line-height: 1.25; }
+      .meta { font-size: 13px; }
+      .legend { margin-top: 10px; }
+      .summary { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; padding: 12px 14px; }
+      .summary span { padding: 9px 10px; font-size: 13px; line-height: 1.3; }
+      main { padding: 0 12px 22px; }
+      .desktop-table { display: none; }
+      .mobile-orders { display: block; }
+      .store-section { margin: 0 0 14px; }
+      .store-title { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; margin: 8px 2px 8px; }
+      .store-title h2 { margin: 0; font-size: 15px; letter-spacing: 0; }
+      .store-title span { color: var(--muted); font-size: 12px; white-space: nowrap; }
+      .order-card { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; margin: 0 0 10px; padding: 12px; box-shadow: 0 1px 2px rgba(16, 24, 32, .04); }
+      .order-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; margin-bottom: 10px; }
+      .order-id { font-weight: 750; font-size: 14px; line-height: 1.35; overflow-wrap: anywhere; }
+      .status-pill { flex: 0 0 auto; border-radius: 999px; padding: 4px 8px; font-size: 12px; line-height: 1; border: 1px solid var(--line); color: var(--muted); background: #f8fafb; }
+      .status-pill.needs { color: var(--risk); background: var(--risk-bg); border-color: #f3aaaa; }
+      .status-pill.done { color: var(--done); background: var(--done-bg); border-color: #9bd8ad; }
+      .order-meta { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; margin-bottom: 10px; }
+      .meta-box { border: 1px solid #e6ecef; border-radius: 8px; padding: 8px; background: #fbfcfc; min-width: 0; }
+      .meta-label { display: block; color: var(--muted); font-size: 11px; margin-bottom: 4px; }
+      .meta-value { display: block; font-size: 13px; line-height: 1.35; overflow-wrap: anywhere; }
+      .next-action { border-radius: 8px; padding: 9px 10px; background: var(--warn-bg); color: var(--warn); border: 1px solid #efd27c; font-size: 13px; line-height: 1.45; margin: 8px 0 12px; overflow-wrap: anywhere; }
+      .timeline { position: relative; display: grid; gap: 0; }
+      .mobile-step { display: grid; grid-template-columns: 22px minmax(0, 1fr); gap: 8px; padding: 0 0 12px; position: relative; }
+      .mobile-step:last-child { padding-bottom: 0; }
+      .mobile-step::before { content: ""; position: absolute; left: 10px; top: 18px; bottom: -2px; width: 2px; background: #dae4e7; }
+      .mobile-step:last-child::before { display: none; }
+      .dot { width: 14px; height: 14px; margin-top: 3px; border-radius: 999px; border: 2px solid currentColor; background: #ffffff; z-index: 1; }
+      .mobile-step.done { color: var(--done); background: transparent; border: 0; }
+      .mobile-step.missing { color: var(--risk); background: transparent; border: 0; }
+      .mobile-step.done .dot { background: var(--done); }
+      .step-copy { color: var(--text); min-width: 0; }
+      .step-line { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; }
+      .step-name { font-size: 13px; font-weight: 700; }
+      .step-state { font-size: 12px; color: currentColor; white-space: nowrap; }
+      .step-detail { margin-top: 3px; font-size: 12px; line-height: 1.4; color: var(--muted); overflow-wrap: anywhere; }
+      .mobile-empty { display: block; background: var(--surface); border-radius: 8px; border: 1px solid var(--line); }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>光环店买货流程近30天看板</h1>
+    <div class="meta">生成时间：2026-05-15 14:02。绿色代表已完成，红色代表未完成或异常。</div>
+    <div class="legend"><span><i class="ok"></i>已完成</span><span><i class="bad"></i>未完成或异常</span></div>
+  </header>
+  <section class="summary"><span>近30天订单：1</span><span>正常关闭：0</span><span>进行中：1</span><span>需要盯：1</span></section>
+  <main>
+    <section class="mobile-orders"><section class="store-section">
+  <div class="store-title"><h2>光环店</h2><span>进行中 1｜需要盯 1</span></div>
+  <article class="order-card">
+  <div class="order-head">
+    <div class="order-id">光环店-20260514-001</div>
+    <div class="status-pill needs">已报账待运单</div>
+  </div>
+  <div class="order-meta">
+    <div class="meta-box"><span class="meta-label">下单时间</span><span class="meta-value">05-14 19:02</span></div>
+    <div class="meta-box"><span class="meta-label">红色未完成</span><span class="meta-value">运单追踪、收货确认、正常关闭</span></div>
+    <div class="meta-box"><span class="meta-label">原需求</span><span class="meta-value">酸汤5件</span></div>
+    <div class="meta-box"><span class="meta-label">实际反馈</span><span class="meta-value">酸汤4件</span></div>
+  </div>
+  <div class="next-action">下一步：补：运单追踪（待快递公司和运单号）</div>
+  <div class="timeline"><div class="mobile-step done">
+  <span class="dot"></span>
+  <div class="step-copy">
+    <div class="step-line"><span class="step-name">采购单生成</span><span class="step-state">完成</span></div>
+    <div class="step-detail">原需求：酸汤5件</div>
+  </div>
+</div>
+<div class="mobile-step done">
+  <span class="dot"></span>
+  <div class="step-copy">
+    <div class="step-line"><span class="step-name">买货反馈</span><span class="step-state">完成</span></div>
+    <div class="step-detail">实际：酸汤4件</div>
+  </div>
+</div>
+<div class="mobile-step done">
+  <span class="dot"></span>
+  <div class="step-copy">
+    <div class="step-line"><span class="step-name">发起人收到</span><span class="step-state">完成</span></div>
+    <div class="step-detail">已收到</div>
+  </div>
+</div>
+<div class="mobile-step done">
+  <span class="dot"></span>
+  <div class="step-copy">
+    <div class="step-line"><span class="step-name">管理确认</span><span class="step-state">完成</span></div>
+    <div class="step-detail">已确认：同意</div>
+  </div>
+</div>
+<div class="mobile-step done">
+  <span class="dot"></span>
+  <div class="step-copy">
+    <div class="step-line"><span class="step-name">财务报账</span><span class="step-state">完成</span></div>
+    <div class="step-detail">已报账</div>
+  </div>
+</div>
+<div class="mobile-step missing">
+  <span class="dot"></span>
+  <div class="step-copy">
+    <div class="step-line"><span class="step-name">运单追踪</span><span class="step-state">未完成</span></div>
+    <div class="step-detail">待快递公司和运单号</div>
+  </div>
+</div>
+<div class="mobile-step missing">
+  <span class="dot"></span>
+  <div class="step-copy">
+    <div class="step-line"><span class="step-name">收货确认</span><span class="step-state">未完成</span></div>
+    <div class="step-detail">待收货确认</div>
+  </div>
+</div>
+<div class="mobile-step missing">
+  <span class="dot"></span>
+  <div class="step-copy">
+    <div class="step-line"><span class="step-name">正常关闭</span><span class="step-state">未完成</span></div>
+    <div class="step-detail">已报账待运单</div>
+  </div>
+</div></div>
+</article>
+</section></section>
+    <section class="desktop-table">
+      <table>
+      <thead>
+        <tr>
+          <th>店铺</th>
+          <th>订单号</th>
+          <th>当前状态</th>
+          <th>采购单生成</th>
+          <th>买货反馈</th>
+          <th>发起人收到</th>
+          <th>管理确认</th>
+          <th>财务报账</th>
+          <th>运单追踪</th>
+          <th>收货确认</th>
+          <th>正常关闭</th>
+          <th>下一步</th>
+        </tr>
+      </thead>
+      <tbody><tr>
+  <td data-label="店铺">光环店</td>
+  <td data-label="订单号">光环店-20260514-001</td>
+  <td data-label="当前状态">已报账待运单</td>
+  <td data-label="采购单生成"><div class="step done">完成<span class="detail">原需求：酸汤5件</span></div></td>
+<td data-label="买货反馈"><div class="step done">完成<span class="detail">实际：酸汤4件</span></div></td>
+<td data-label="发起人收到"><div class="step done">完成<span class="detail">已收到</span></div></td>
+<td data-label="管理确认"><div class="step done">完成<span class="detail">已确认：同意</span></div></td>
+<td data-label="财务报账"><div class="step done">完成<span class="detail">已报账</span></div></td>
+<td data-label="运单追踪"><div class="step missing">未完成<span class="detail">待快递公司和运单号</span></div></td>
+<td data-label="收货确认"><div class="step missing">未完成<span class="detail">待收货确认</span></div></td>
+<td data-label="正常关闭"><div class="step missing">未完成<span class="detail">已报账待运单</span></div></td>
+  <td class="next" data-label="下一步">补：运单追踪（待快递公司和运单号）</td>
+</tr></tbody>
+      </table>
+    </section>
+  </main>
+</body>
+</html>
