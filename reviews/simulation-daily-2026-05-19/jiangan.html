@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>L3 江岸店评价日报（模拟）</title>
+  <style>
+    :root { --ink:#172033; --muted:#667085; --line:#d8dee8; --bg:#f6f7f9; --panel:#fff; --green:#18794e; --gold:#b7791f; --soft:#eef3f7; }
+    * { box-sizing:border-box; }
+    body { margin:0; background:var(--bg); color:var(--ink); font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif; }
+    header { padding:28px 36px 20px; background:#fff; border-bottom:1px solid var(--line); }
+    header h1 { margin:0 0 8px; font-size:28px; letter-spacing:0; }
+    header p { margin:0; color:var(--muted); }
+    nav { display:flex; gap:10px; margin-top:16px; flex-wrap:wrap; }
+    nav a { color:var(--ink); text-decoration:none; border:1px solid var(--line); background:var(--soft); border-radius:6px; padding:8px 12px; font-size:14px; }
+    main { padding:24px 36px 48px; max-width:1360px; margin:auto; }
+    .overview, .metrics, .split { display:grid; gap:14px; }
+    .overview, .metrics { grid-template-columns:repeat(5,minmax(130px,1fr)); margin:14px 0; }
+    .metric { background:var(--panel); border:1px solid var(--line); border-radius:8px; padding:14px; min-height:92px; }
+    .metric span { display:block; color:var(--muted); font-size:13px; }
+    .metric strong { display:block; font-size:30px; margin:8px 0 4px; letter-spacing:0; }
+    .metric small { color:var(--muted); }
+    .notice { border-left:4px solid var(--gold); background:#fff9df; padding:12px 14px; margin:14px 0; }
+    .store-section { margin-top:26px; }
+    .section-title p { margin:0 0 2px; color:#315f95; font-weight:700; }
+    .section-title h2 { margin:0; font-size:24px; }
+    .split { grid-template-columns:1fr 1fr; }
+    .panel, details { background:var(--panel); border:1px solid var(--line); border-radius:8px; padding:16px; margin-top:14px; }
+    .panel h3 { margin:0 0 12px; font-size:17px; }
+    .advice { margin:0; padding-left:20px; line-height:1.75; }
+    summary { cursor:pointer; font-weight:700; }
+    .review-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; margin-top:14px; }
+    .review-grid.compact { grid-template-columns:1fr; }
+    .review { border:1px solid var(--line); border-radius:8px; padding:14px; background:#fff; }
+    .review.watch { border-color:#e4b15a; background:#fffaf1; }
+    .review-head { display:flex; justify-content:space-between; gap:12px; align-items:flex-start; }
+    .review-head small { display:block; color:var(--muted); margin-top:3px; line-height:1.4; }
+    .review-head b { color:var(--green); white-space:nowrap; }
+    .review.watch .review-head b { color:#9f5800; }
+    .review p { margin:12px 0; line-height:1.65; white-space:pre-wrap; }
+    .chips { display:flex; flex-wrap:wrap; gap:8px; }
+    .chips span { border:1px solid var(--line); border-radius:999px; padding:4px 8px; background:#fbfcfd; color:#344056; font-size:12px; }
+    .meta, .empty { color:var(--muted); font-size:12px; margin-top:10px; }
+    @media (max-width: 900px) { header, main { padding-left:18px; padding-right:18px; } .overview, .metrics, .split, .review-grid { grid-template-columns:1fr; } }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>L3 江岸店评价日报（模拟）</h1>
+    <p>生成时间：2026-05-19 11:07 · 日报统计日期：2026-05-18</p>
+    
+  </header>
+  <main>
+      <section id="L3" class="store-section">
+        <div class="section-title">
+          <div><p>L3</p><h2>江岸店</h2></div>
+        </div>
+        <div class="metrics">
+          <div class='metric'><span>昨日新增</span><strong>5</strong><small>2026-05-18</small></div>
+          <div class='metric'><span>平均评分</span><strong>4.7</strong><small>昨日</small></div>
+          <div class='metric'><span>3.5分及以下</span><strong>1</strong><small>含正向低分</small></div>
+          <div class='metric'><span>需改进项</span><strong>1</strong><small>真实负向</small></div>
+          <div class='metric'><span>当前未回复</span><strong>0</strong><small>点评/美团复核</small></div>
+        </div>
+        <div class="split">
+          <div class="panel"><h3>表现好的方面</h3><ul class="advice"><li>顾客集中认可酸汤开胃、吊龙肉新鲜、小料种类、服务态度、环境和蔬菜新鲜。继续加强出品稳定、前厅服务节奏和自助菜区补充。</li></ul></div>
+          <div class="panel"><h3>需要改正的方面</h3><ul class="advice"><li>餐位费、扫码点单、套餐核销和离店付款确认需要立即统一话术并复盘流程。顾客已明确表达“多一位收餐位费、必须扫码、离店被说未付款”的不满，店长要避免下次再出现同样误解。</li></ul></div>
+        </div>
+        <div class="panel">
+          <h3>3.5分及以下需改进评价</h3>
+          <div class="review-grid compact">
+      <article class="review watch">
+        <div class="review-head">
+          <div>
+            <strong>匿名用户</strong>
+            <small>2026-05-18 21:29 · 点评 · 消费后评价</small>
+          </div>
+          <b>3.5 分</b>
+        </div>
+        <p>很久没来吃了，现在购买套餐比团购餐多一位还要单独收餐位费，吃了这么多店还没遇到过这种，直接买套餐验卷不好吗？非要扫桌上的二维码，服务员小妹帮忙点点点，吃完走，尽然说我没付款</p>
+        <div class="chips"><span>需改进</span></div>
+        <div class="meta">口味 3.5 · 环境 3.5 · 服务 3.5 · 已回复</div>
+      </article>
+    </div>
+        </div>
+        <details open>
+          <summary>昨日新增评价明细（5 条）</summary>
+          <div class="review-grid">
+      <article class="review watch">
+        <div class="review-head">
+          <div>
+            <strong>匿名用户</strong>
+            <small>2026-05-18 21:29 · 点评 · 消费后评价</small>
+          </div>
+          <b>3.5 分</b>
+        </div>
+        <p>很久没来吃了，现在购买套餐比团购餐多一位还要单独收餐位费，吃了这么多店还没遇到过这种，直接买套餐验卷不好吗？非要扫桌上的二维码，服务员小妹帮忙点点点，吃完走，尽然说我没付款</p>
+        <div class="chips"><span>需改进</span></div>
+        <div class="meta">口味 3.5 · 环境 3.5 · 服务 3.5 · 已回复</div>
+      </article>
+    
+      <article class="review normal">
+        <div class="review-head">
+          <div>
+            <strong>Rio</strong>
+            <small>2026-05-18 13:40 · 点评 · 打卡后评价</small>
+          </div>
+          <b>5 分</b>
+        </div>
+        <p>今天到天街的4楼看到一家黔山苗岭豆米火锅，吃惯了平时的火锅就想尝一下这家贵州酸汤火锅啥味儿，结果出乎意料的好吃！我们买了套餐100多吃到扶墙出…里面的肉好嫩，吊龙肉、丸子和虾滑面筋子，吊龙肉质紧实很新鲜也很绝，光看着就很有食欲 值得推荐，...</p>
+        <div class="chips"><span>正向/正常</span></div>
+        <div class="meta">口味 5 · 环境 5 · 服务 5 · 已回复</div>
+      </article>
+    
+      <article class="review normal">
+        <div class="review-head">
+          <div>
+            <strong>贤勇诚恳的小徐</strong>
+            <small>2026-05-18 12:44 · 点评 · 打卡后评价</small>
+          </div>
+          <b>5 分</b>
+        </div>
+        <p>位置很好找，小料种类多，酸汤开胃超好吃，会再来</p>
+        <div class="chips"><span>正向/正常</span></div>
+        <div class="meta">口味 5 · 环境 5 · 服务 5 · 已回复</div>
+      </article>
+    
+      <article class="review normal">
+        <div class="review-head">
+          <div>
+            <strong>杯子hzr</strong>
+            <small>2026-05-18 12:40 · 点评 · 打卡后评价</small>
+          </div>
+          <b>5 分</b>
+        </div>
+        <p>第一次尝试，服务态度很好，环境不错，菜品新鲜，蔬菜无限吃爱吃菜的有福了，推荐</p>
+        <div class="chips"><span>正向/正常</span></div>
+        <div class="meta">口味 5 · 环境 5 · 服务 5 · 已回复</div>
+      </article>
+    
+      <article class="review normal">
+        <div class="review-head">
+          <div>
+            <strong>娜姐</strong>
+            <small>2026-05-18 11:31 · 点评 · 打卡后评价</small>
+          </div>
+          <b>5 分</b>
+        </div>
+        <p>今天来的比较早，环境挺好的，小姐姐的服务很贴心，今天的蔬菜看起来也很新鲜，刚好是早上新上的，期待用餐咯</p>
+        <div class="chips"><span>正向/正常</span></div>
+        <div class="meta">口味 5 · 环境 5 · 服务 5 · 已回复</div>
+      </article>
+    </div>
+        </details>
+      </section>
+    </main>
+</body>
+</html>
