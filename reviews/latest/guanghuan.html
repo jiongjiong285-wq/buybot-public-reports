@@ -3,41 +3,31 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>L1 光环店评价日报与周报</title>
+  <title>L1 光环店评价日报</title>
   <style>
-    :root {
-      --ink:#18212f; --muted:#687385; --line:#d9dee8; --bg:#f6f7f9; --panel:#fff;
-      --gold:#d59a00; --green:#18865d; --red:#b42318; --blue:#315f95; --soft:#eef3f7;
-    }
+    :root { --ink:#172033; --muted:#667085; --line:#d8dee8; --bg:#f6f7f9; --panel:#fff; --green:#18794e; --gold:#b7791f; --soft:#eef3f7; }
     * { box-sizing:border-box; }
     body { margin:0; background:var(--bg); color:var(--ink); font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif; }
-    header { padding:28px 36px 20px; background:#ffffff; border-bottom:1px solid var(--line); position:sticky; top:0; z-index:5; }
+    header { padding:28px 36px 20px; background:#fff; border-bottom:1px solid var(--line); }
     header h1 { margin:0 0 8px; font-size:28px; letter-spacing:0; }
     header p { margin:0; color:var(--muted); }
-    nav { display:flex; gap:10px; margin-top:18px; flex-wrap:wrap; }
+    nav { display:flex; gap:10px; margin-top:16px; flex-wrap:wrap; }
     nav a { color:var(--ink); text-decoration:none; border:1px solid var(--line); background:var(--soft); border-radius:6px; padding:8px 12px; font-size:14px; }
-    main { padding:24px 36px 48px; max-width:1440px; margin:auto; }
+    main { padding:24px 36px 48px; max-width:1360px; margin:auto; }
     .overview, .metrics, .split { display:grid; gap:14px; }
-    .overview { grid-template-columns:repeat(5,minmax(150px,1fr)); margin-bottom:20px; }
-    .metrics { grid-template-columns:repeat(5,minmax(120px,1fr)); margin:14px 0; }
-    .metric { background:var(--panel); border:1px solid var(--line); border-radius:8px; padding:14px; min-height:94px; }
+    .overview, .metrics { grid-template-columns:repeat(5,minmax(130px,1fr)); margin:14px 0; }
+    .metric { background:var(--panel); border:1px solid var(--line); border-radius:8px; padding:14px; min-height:92px; }
     .metric span { display:block; color:var(--muted); font-size:13px; }
     .metric strong { display:block; font-size:30px; margin:8px 0 4px; letter-spacing:0; }
     .metric small { color:var(--muted); }
-    .store-section { margin-top:22px; padding-top:6px; }
-    .section-title { display:flex; align-items:end; justify-content:space-between; gap:24px; margin:20px 0 12px; }
-    .section-title p { margin:0 0 2px; color:var(--blue); font-weight:700; }
+    .notice { border-left:4px solid var(--gold); background:#fff9df; padding:12px 14px; margin:14px 0; }
+    .store-section { margin-top:26px; }
+    .section-title p { margin:0 0 2px; color:#315f95; font-weight:700; }
     .section-title h2 { margin:0; font-size:24px; }
-    .bar { flex:1; max-width:360px; height:10px; background:#e7e9ef; border-radius:999px; overflow:hidden; }
-    .bar i { display:block; height:100%; background:linear-gradient(90deg,var(--green),var(--gold)); }
-    .split { grid-template-columns:1.2fr .8fr; }
+    .split { grid-template-columns:1fr 1fr; }
     .panel, details { background:var(--panel); border:1px solid var(--line); border-radius:8px; padding:16px; margin-top:14px; }
     .panel h3 { margin:0 0 12px; font-size:17px; }
     .advice { margin:0; padding-left:20px; line-height:1.75; }
-    .tag-cloud { display:flex; flex-wrap:wrap; gap:8px; }
-    .tag-cloud span, .chips span { border:1px solid var(--line); border-radius:999px; padding:4px 8px; background:#fbfcfd; color:#344056; font-size:12px; }
-    .tag-cloud em { color:var(--muted); font-style:normal; }
-    .scores { color:var(--muted); margin:14px 0 0; }
     summary { cursor:pointer; font-weight:700; }
     .review-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; margin-top:14px; }
     .review-grid.compact { grid-template-columns:1fr; }
@@ -48,109 +38,44 @@
     .review-head b { color:var(--green); white-space:nowrap; }
     .review.watch .review-head b { color:#9f5800; }
     .review p { margin:12px 0; line-height:1.65; white-space:pre-wrap; }
-    .chips { display:flex; gap:6px; flex-wrap:wrap; }
-    .meta { color:var(--muted); font-size:12px; margin-top:10px; }
-    .empty { color:var(--muted); margin:4px 0; }
-    table { width:100%; border-collapse:collapse; background:#fff; border:1px solid var(--line); border-radius:8px; overflow:hidden; }
-    th, td { padding:10px; border-bottom:1px solid var(--line); text-align:left; font-size:14px; }
-    th { background:#eef3f7; }
-    @media (max-width: 900px) {
-      header, main { padding-left:18px; padding-right:18px; }
-      .overview, .metrics, .split, .review-grid { grid-template-columns:1fr; }
-      .section-title { display:block; }
-      .bar { margin-top:12px; max-width:none; }
-    }
+    .chips { display:flex; flex-wrap:wrap; gap:8px; }
+    .chips span { border:1px solid var(--line); border-radius:999px; padding:4px 8px; background:#fbfcfd; color:#344056; font-size:12px; }
+    .meta, .empty { color:var(--muted); font-size:12px; margin-top:10px; }
+    @media (max-width: 900px) { header, main { padding-left:18px; padding-right:18px; } .overview, .metrics, .split, .review-grid { grid-template-columns:1fr; } }
   </style>
 </head>
 <body>
   <header>
-    <h1>L1 光环店评价日报与周报</h1>
-    <p>生成时间：2026-05-18 11:05 · 数据来源：美团经营宝「评价下载」</p>
+    <h1>L1 光环店评价日报</h1>
+    <p>生成时间：2026-05-20 08:35 · 日报统计日期：2026-05-19</p>
     
   </header>
   <main>
-    <section id="L1" class="store-section">
-      <div class="section-title">
-        <div>
-          <p>L1</p>
-          <h2>光环店</h2>
+      <section id="L1" class="store-section">
+        <div class="section-title">
+          <div><p>L1</p><h2>光环店</h2></div>
         </div>
-        <div class="bar"><i style="width:4%"></i></div>
-      </div>
-      <div class="metrics">
-        <div class="metric"><span>昨日新增</span><strong>1</strong><small>均分 5</small></div>
-        <div class="metric"><span>周新增</span><strong>2</strong><small>均分 5</small></div>
-        <div class="metric"><span>差评</span><strong>0</strong><small>0.5-2 分</small></div>
-        <div class="metric"><span>中评风险</span><strong>0</strong><small>≤3.5 分</small></div>
-        <div class="metric"><span>未回复</span><strong>2</strong><small>需补齐</small></div>
-      </div>
-      <div class="split">
-        <div class="panel">
-          <h3>店长重点</h3>
-          <ul class="advice"><li>评价量偏低：昨日 1 条、近 7 天 2 条，评分稳定但样本太少，建议收银/离店环节引导满意顾客完成评价。</li><li>两条周评价均未回复，需当天补齐回复，避免平台判定互动不足。</li><li>顾客正向标签集中在酸爽、新鲜、服务周到，可作为店内话术重点。</li><li>光环店 本周期无差评/中评风险，重点是扩大有效评价量并维持回复率。</li></ul>
+        <div class="metrics">
+          <div class='metric'><span>昨日新增</span><strong>0</strong><small>2026-05-19</small></div>
+          <div class='metric'><span>平均评分</span><strong>0</strong><small>昨日</small></div>
+          <div class='metric'><span>3.5分及以下</span><strong>0</strong><small>含正向低分</small></div>
+          <div class='metric'><span>需改进项</span><strong>0</strong><small>真实负向</small></div>
+          <div class='metric'><span>3条基数</span><strong>未达标</strong><small>每日目标</small></div>
+          <div class='metric'><span>当前未回复</span><strong>0</strong><small>点评/美团复核</small></div>
+        </div>
+        <div class="split">
+          <div class="panel"><h3>表现好的方面</h3><ul class="advice"><li>非常棒！昨天没有差评，继续努力。 昨天没有新增评价，暂时没有新的顾客正向反馈；今天要把餐后邀评和真实好评沉淀补起来。</li></ul></div>
+          <div class="panel"><h3>需要改正的方面</h3><ul class="advice"><li>昨天没有新增评价；请加强评价管理，每天需要增加 3 条以上真实好评/新增评价。 昨天没有需要单独列为改进项的差评，但新增评价为 0；店长要复盘餐后邀评动作，避免评价断档。</li></ul></div>
         </div>
         <div class="panel">
-          <h3>本周高频标签</h3>
-          <div class="tag-cloud"><span>酸爽 <em>1</em></span><span>新鲜 <em>1</em></span><span>服务周到 <em>1</em></span><span>店面大 <em>1</em></span></div>
-          <p class="scores">口味 5 · 环境 5 · 服务 5</p>
+          <h3>3.5分及以下需改进评价</h3>
+          <div class="review-grid compact"><p class='empty'>昨日无需要单独列为改进项的 3.5 分及以下评价。</p></div>
         </div>
-      </div>
-      <div class="panel">
-        <h3>差评/中评风险内容</h3>
-        <div class="review-grid compact"><p class='empty'>本周期无差评或中评风险评价。</p></div>
-      </div>
-      <details open>
-        <summary>昨日本店新增评价明细（1 条）</summary>
-        <div class="review-grid">
-      <article class="review normal">
-        <div class="review-head">
-          <div>
-            <strong>小飞侠1005</strong>
-            <small>2026-05-17 19:50:48 · 点评 · 点评-普通评价</small>
-          </div>
-          <b>5 分</b>
-        </div>
-        <p>口味：「贵州红酸汤锅底」太好喝了（酸度适中，超级开胃）「自助蔬菜」重庆最无敌最新鲜的素菜自助之一（不能是唯一），空心菜全是尖尖、有花生苗、汉菜、茼蒿、木耳菜、绿豆芽…..夏天据说还有水性杨花（夏天必须再来一次）。
-环境：位置很多，周边环境很好；
-服务：服务很到位！</p>
-        <div class="chips"><span>酸爽</span><span>新鲜</span><span>服务周到</span><span>店面大</span><span>优质评价</span><span>带图评价</span></div>
-        <div class="meta">口味 5 · 环境 5 · 服务 5 · 未回复</div>
-      </article>
-    </div>
-      </details>
-      <details open>
-        <summary>近 7 天本店新增评价明细（2 条）</summary>
-        <div class="review-grid">
-      <article class="review normal">
-        <div class="review-head">
-          <div>
-            <strong>小飞侠1005</strong>
-            <small>2026-05-17 19:50:48 · 点评 · 点评-普通评价</small>
-          </div>
-          <b>5 分</b>
-        </div>
-        <p>口味：「贵州红酸汤锅底」太好喝了（酸度适中，超级开胃）「自助蔬菜」重庆最无敌最新鲜的素菜自助之一（不能是唯一），空心菜全是尖尖、有花生苗、汉菜、茼蒿、木耳菜、绿豆芽…..夏天据说还有水性杨花（夏天必须再来一次）。
-环境：位置很多，周边环境很好；
-服务：服务很到位！</p>
-        <div class="chips"><span>酸爽</span><span>新鲜</span><span>服务周到</span><span>店面大</span><span>优质评价</span><span>带图评价</span></div>
-        <div class="meta">口味 5 · 环境 5 · 服务 5 · 未回复</div>
-      </article>
-    
-      <article class="review normal">
-        <div class="review-head">
-          <div>
-            <strong>匿名用户</strong>
-            <small>2026-05-16 19:19:17 · 点评 · 点评-买单</small>
-          </div>
-          <b>5 分</b>
-        </div>
-        <p>之前在杨家坪吃过味道很不错，自助的素菜也很多，光环店比较宽敞也不需要排队，推荐来吃！</p>
-        <div class="chips"><span>消费后评价</span></div>
-        <div class="meta">口味 5 · 环境 5 · 服务 5 · 未回复</div>
-      </article>
-    </div>
-      </details>
-    </section>
+        <details open>
+          <summary>昨日新增评价明细（0 条）</summary>
+          <div class="review-grid"><p class='empty'>昨日无新增评价。</p></div>
+        </details>
+      </section>
     </main>
 </body>
 </html>

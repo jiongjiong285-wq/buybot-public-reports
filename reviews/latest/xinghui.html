@@ -3,41 +3,31 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>L2 星汇店评价日报与周报</title>
+  <title>L2 星汇店评价日报</title>
   <style>
-    :root {
-      --ink:#18212f; --muted:#687385; --line:#d9dee8; --bg:#f6f7f9; --panel:#fff;
-      --gold:#d59a00; --green:#18865d; --red:#b42318; --blue:#315f95; --soft:#eef3f7;
-    }
+    :root { --ink:#172033; --muted:#667085; --line:#d8dee8; --bg:#f6f7f9; --panel:#fff; --green:#18794e; --gold:#b7791f; --soft:#eef3f7; }
     * { box-sizing:border-box; }
     body { margin:0; background:var(--bg); color:var(--ink); font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif; }
-    header { padding:28px 36px 20px; background:#ffffff; border-bottom:1px solid var(--line); position:sticky; top:0; z-index:5; }
+    header { padding:28px 36px 20px; background:#fff; border-bottom:1px solid var(--line); }
     header h1 { margin:0 0 8px; font-size:28px; letter-spacing:0; }
     header p { margin:0; color:var(--muted); }
-    nav { display:flex; gap:10px; margin-top:18px; flex-wrap:wrap; }
+    nav { display:flex; gap:10px; margin-top:16px; flex-wrap:wrap; }
     nav a { color:var(--ink); text-decoration:none; border:1px solid var(--line); background:var(--soft); border-radius:6px; padding:8px 12px; font-size:14px; }
-    main { padding:24px 36px 48px; max-width:1440px; margin:auto; }
+    main { padding:24px 36px 48px; max-width:1360px; margin:auto; }
     .overview, .metrics, .split { display:grid; gap:14px; }
-    .overview { grid-template-columns:repeat(5,minmax(150px,1fr)); margin-bottom:20px; }
-    .metrics { grid-template-columns:repeat(5,minmax(120px,1fr)); margin:14px 0; }
-    .metric { background:var(--panel); border:1px solid var(--line); border-radius:8px; padding:14px; min-height:94px; }
+    .overview, .metrics { grid-template-columns:repeat(5,minmax(130px,1fr)); margin:14px 0; }
+    .metric { background:var(--panel); border:1px solid var(--line); border-radius:8px; padding:14px; min-height:92px; }
     .metric span { display:block; color:var(--muted); font-size:13px; }
     .metric strong { display:block; font-size:30px; margin:8px 0 4px; letter-spacing:0; }
     .metric small { color:var(--muted); }
-    .store-section { margin-top:22px; padding-top:6px; }
-    .section-title { display:flex; align-items:end; justify-content:space-between; gap:24px; margin:20px 0 12px; }
-    .section-title p { margin:0 0 2px; color:var(--blue); font-weight:700; }
+    .notice { border-left:4px solid var(--gold); background:#fff9df; padding:12px 14px; margin:14px 0; }
+    .store-section { margin-top:26px; }
+    .section-title p { margin:0 0 2px; color:#315f95; font-weight:700; }
     .section-title h2 { margin:0; font-size:24px; }
-    .bar { flex:1; max-width:360px; height:10px; background:#e7e9ef; border-radius:999px; overflow:hidden; }
-    .bar i { display:block; height:100%; background:linear-gradient(90deg,var(--green),var(--gold)); }
-    .split { grid-template-columns:1.2fr .8fr; }
+    .split { grid-template-columns:1fr 1fr; }
     .panel, details { background:var(--panel); border:1px solid var(--line); border-radius:8px; padding:16px; margin-top:14px; }
     .panel h3 { margin:0 0 12px; font-size:17px; }
     .advice { margin:0; padding-left:20px; line-height:1.75; }
-    .tag-cloud { display:flex; flex-wrap:wrap; gap:8px; }
-    .tag-cloud span, .chips span { border:1px solid var(--line); border-radius:999px; padding:4px 8px; background:#fbfcfd; color:#344056; font-size:12px; }
-    .tag-cloud em { color:var(--muted); font-style:normal; }
-    .scores { color:var(--muted); margin:14px 0 0; }
     summary { cursor:pointer; font-weight:700; }
     .review-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; margin-top:14px; }
     .review-grid.compact { grid-template-columns:1fr; }
@@ -48,729 +38,83 @@
     .review-head b { color:var(--green); white-space:nowrap; }
     .review.watch .review-head b { color:#9f5800; }
     .review p { margin:12px 0; line-height:1.65; white-space:pre-wrap; }
-    .chips { display:flex; gap:6px; flex-wrap:wrap; }
-    .meta { color:var(--muted); font-size:12px; margin-top:10px; }
-    .empty { color:var(--muted); margin:4px 0; }
-    table { width:100%; border-collapse:collapse; background:#fff; border:1px solid var(--line); border-radius:8px; overflow:hidden; }
-    th, td { padding:10px; border-bottom:1px solid var(--line); text-align:left; font-size:14px; }
-    th { background:#eef3f7; }
-    @media (max-width: 900px) {
-      header, main { padding-left:18px; padding-right:18px; }
-      .overview, .metrics, .split, .review-grid { grid-template-columns:1fr; }
-      .section-title { display:block; }
-      .bar { margin-top:12px; max-width:none; }
-    }
+    .chips { display:flex; flex-wrap:wrap; gap:8px; }
+    .chips span { border:1px solid var(--line); border-radius:999px; padding:4px 8px; background:#fbfcfd; color:#344056; font-size:12px; }
+    .meta, .empty { color:var(--muted); font-size:12px; margin-top:10px; }
+    @media (max-width: 900px) { header, main { padding-left:18px; padding-right:18px; } .overview, .metrics, .split, .review-grid { grid-template-columns:1fr; } }
   </style>
 </head>
 <body>
   <header>
-    <h1>L2 星汇店评价日报与周报</h1>
-    <p>生成时间：2026-05-18 11:05 · 数据来源：美团经营宝「评价下载」</p>
+    <h1>L2 星汇店评价日报</h1>
+    <p>生成时间：2026-05-20 08:35 · 日报统计日期：2026-05-19</p>
     
   </header>
   <main>
-    <section id="L2" class="store-section">
-      <div class="section-title">
-        <div>
-          <p>L2</p>
-          <h2>星汇店</h2>
+      <section id="L2" class="store-section">
+        <div class="section-title">
+          <div><p>L2</p><h2>星汇店</h2></div>
         </div>
-        <div class="bar"><i style="width:100%"></i></div>
-      </div>
-      <div class="metrics">
-        <div class="metric"><span>昨日新增</span><strong>6</strong><small>均分 4.92</small></div>
-        <div class="metric"><span>周新增</span><strong>43</strong><small>均分 4.93</small></div>
-        <div class="metric"><span>差评</span><strong>0</strong><small>0.5-2 分</small></div>
-        <div class="metric"><span>中评风险</span><strong>0</strong><small>≤3.5 分</small></div>
-        <div class="metric"><span>未回复</span><strong>1</strong><small>需补齐</small></div>
-      </div>
-      <div class="split">
-        <div class="panel">
-          <h3>店长重点</h3>
-          <ul class="advice"><li>评价量最高：近 7 天 43 条，且无中差评，应保持高峰期补菜、撤盘和服务响应速度。</li><li>昨日仍有 1 条未回复，建议固定晚班收口前清零评价回复。</li><li>正向关键词集中在新鲜、正宗、环境干净和态度好，可继续强化自助蔬菜新鲜度和酸汤锅底稳定性。</li><li>星汇店 本周期无差评/中评风险，重点是扩大有效评价量并维持回复率。</li></ul>
+        <div class="metrics">
+          <div class='metric'><span>昨日新增</span><strong>3</strong><small>2026-05-19</small></div>
+          <div class='metric'><span>平均评分</span><strong>5</strong><small>昨日</small></div>
+          <div class='metric'><span>3.5分及以下</span><strong>0</strong><small>含正向低分</small></div>
+          <div class='metric'><span>需改进项</span><strong>0</strong><small>真实负向</small></div>
+          <div class='metric'><span>3条基数</span><strong>达标</strong><small>每日目标</small></div>
+          <div class='metric'><span>当前未回复</span><strong>0</strong><small>点评/美团复核</small></div>
+        </div>
+        <div class="split">
+          <div class="panel"><h3>表现好的方面</h3><ul class="advice"><li>非常棒！昨天没有差评，继续努力。 顾客认可锅底口味、食材新鲜和蔬菜补充、服务响应、环境卫生、套餐性价比和位置便利。店长要继续把这些具体优点做稳，并争取更多顾客主动评价。</li></ul></div>
+          <div class="panel"><h3>需要改正的方面</h3><ul class="advice"><li>昨天新增 3 条，达到每天至少 3 条基数；请继续稳定增加真实好评。 昨天没有需要单独列为改进项的差评；继续保持出品、服务和环境稳定，不要因为零差评放松现场巡查。</li></ul></div>
         </div>
         <div class="panel">
-          <h3>本周高频标签</h3>
-          <div class="tag-cloud"><span>味道好 <em>20</em></span><span>态度好 <em>13</em></span><span>新鲜 <em>11</em></span><span>实惠 <em>9</em></span><span>正宗 <em>8</em></span><span>环境干净 <em>7</em></span></div>
-          <p class="scores">口味 4.94 · 环境 4.97 · 服务 4.97</p>
+          <h3>3.5分及以下需改进评价</h3>
+          <div class="review-grid compact"><p class='empty'>昨日无需要单独列为改进项的 3.5 分及以下评价。</p></div>
         </div>
-      </div>
-      <div class="panel">
-        <h3>差评/中评风险内容</h3>
-        <div class="review-grid compact"><p class='empty'>本周期无差评或中评风险评价。</p></div>
-      </div>
-      <details open>
-        <summary>昨日本店新增评价明细（6 条）</summary>
-        <div class="review-grid">
-      <article class="review normal">
-        <div class="review-head">
-          <div>
-            <strong>在沂蒙山放风筝的水饺</strong>
-            <small>2026-05-17 19:48:36 · 点评 · 点评-普通评价</small>
-          </div>
-          <b>5 分</b>
-        </div>
-        <p>口味：非常好吃
-环境：很好找
-服务：老板人非常好
-性价比：很高
-味道非常好吃，过来吃了几次，老板人很好，下次还来吃，推荐</p>
-        <div class="chips"><span>味道好</span><span>实惠</span><span>态度好</span><span>带图评价</span></div>
-        <div class="meta">口味 5 · 环境 5 · 服务 5 · 未回复</div>
-      </article>
-    
-      <article class="review normal">
-        <div class="review-head">
-          <div>
-            <strong>MonsterBabyL</strong>
-            <small>2026-05-17 19:25:56 · 点评 · 点评-普通评价</small>
-          </div>
-          <b>4.5 分</b>
-        </div>
-        <p>口味：酸辣的锅底还不错挺正宗，菜品干净新鲜，野菜种类也多新鲜干净
-环境：环境很好很干净
-服务：小哥和阿姨都挺好的 ，会及时收空盘
-性价比：还可以，人均四五十
-排队：不用排队，到店会及时安排座位</p>
-        <div class="chips"><span>干净卫生</span><span>新鲜</span><span>正宗</span><span>香辣</span><span>及时撤盘</span><span>环境干净</span><span>优质评价</span><span>带图评价</span></div>
-        <div class="meta">口味 4 · 环境 5 · 服务 5 · 已回复</div>
-      </article>
-    
-      <article class="review normal">
-        <div class="review-head">
-          <div>
-            <strong>FAE999190810</strong>
-            <small>2026-05-17 19:11:54 · 美团 · 美团-买单</small>
-          </div>
-          <b>5 分</b>
-        </div>
-        <p>这家位置好找.人还挺多，正宗酸汤豆米火锅，味道不错，菜品挺多的，巴适得板，</p>
-        <div class="chips"><span>味道好</span><span>正宗</span><span>消费后评价</span><span>带图评价</span></div>
-        <div class="meta">口味 5 · 环境 5 · 服务 5 · 已回复</div>
-      </article>
-    
-      <article class="review normal">
-        <div class="review-head">
-          <div>
-            <strong>jwC242714566</strong>
-            <small>2026-05-17 18:42:45 · 美团 · 美团-买单</small>
-          </div>
-          <b>5 分</b>
-        </div>
-        <p>环境不错^_^ 服务特别亲切；主要他们家素菜免费吃……而且性价比超高、味道是正宗的贵州酸汤味！建议打卡</p>
-        <div class="chips"><span>正宗</span><span>实惠</span><span>态度好</span><span>环境好</span><span>消费后评价</span><span>带图评价</span></div>
-        <div class="meta">口味 5 · 环境 5 · 服务 5 · 已回复</div>
-      </article>
-    
-      <article class="review normal">
-        <div class="review-head">
-          <div>
-            <strong>L晴天c</strong>
-            <small>2026-05-17 18:28:32 · 美团 · 美团-普通评价</small>
-          </div>
-          <b>5 分</b>
-        </div>
-        <p>环境：很干净清爽位置也好找
-性价比：很高人均4.50就有挺多菜的
-服务：很不错</p>
-        <div class="chips"><span>实惠</span><span>态度好</span><span>环境干净</span><span>消费后评价</span><span>带图评价</span></div>
-        <div class="meta">口味 5 · 环境 5 · 服务 5 · 已回复</div>
-      </article>
-    
-      <article class="review normal">
-        <div class="review-head">
-          <div>
-            <strong>匿名用户</strong>
-            <small>2026-05-17 18:10:30 · 点评 · 点评-普通评价</small>
-          </div>
-          <b>5 分</b>
-        </div>
-        <p>带一家三口来这家吃，只能说服务很到位，蔬菜水果也非常的新鲜，肉类也很嫩！！</p>
-        <div class="chips"><span>带图评价</span></div>
-        <div class="meta">口味 5 · 环境 5 · 服务 5 · 已回复</div>
-      </article>
-    </div>
-      </details>
-      <details open>
-        <summary>近 7 天本店新增评价明细（43 条）</summary>
-        <div class="review-grid">
-      <article class="review normal">
-        <div class="review-head">
-          <div>
-            <strong>在沂蒙山放风筝的水饺</strong>
-            <small>2026-05-17 19:48:36 · 点评 · 点评-普通评价</small>
-          </div>
-          <b>5 分</b>
-        </div>
-        <p>口味：非常好吃
-环境：很好找
-服务：老板人非常好
-性价比：很高
-味道非常好吃，过来吃了几次，老板人很好，下次还来吃，推荐</p>
-        <div class="chips"><span>味道好</span><span>实惠</span><span>态度好</span><span>带图评价</span></div>
-        <div class="meta">口味 5 · 环境 5 · 服务 5 · 未回复</div>
-      </article>
-    
-      <article class="review normal">
-        <div class="review-head">
-          <div>
-            <strong>MonsterBabyL</strong>
-            <small>2026-05-17 19:25:56 · 点评 · 点评-普通评价</small>
-          </div>
-          <b>4.5 分</b>
-        </div>
-        <p>口味：酸辣的锅底还不错挺正宗，菜品干净新鲜，野菜种类也多新鲜干净
-环境：环境很好很干净
-服务：小哥和阿姨都挺好的 ，会及时收空盘
-性价比：还可以，人均四五十
-排队：不用排队，到店会及时安排座位</p>
-        <div class="chips"><span>干净卫生</span><span>新鲜</span><span>正宗</span><span>香辣</span><span>及时撤盘</span><span>环境干净</span><span>优质评价</span><span>带图评价</span></div>
-        <div class="meta">口味 4 · 环境 5 · 服务 5 · 已回复</div>
-      </article>
-    
-      <article class="review normal">
-        <div class="review-head">
-          <div>
-            <strong>FAE999190810</strong>
-            <small>2026-05-17 19:11:54 · 美团 · 美团-买单</small>
-          </div>
-          <b>5 分</b>
-        </div>
-        <p>这家位置好找.人还挺多，正宗酸汤豆米火锅，味道不错，菜品挺多的，巴适得板，</p>
-        <div class="chips"><span>味道好</span><span>正宗</span><span>消费后评价</span><span>带图评价</span></div>
-        <div class="meta">口味 5 · 环境 5 · 服务 5 · 已回复</div>
-      </article>
-    
-      <article class="review normal">
-        <div class="review-head">
-          <div>
-            <strong>jwC242714566</strong>
-            <small>2026-05-17 18:42:45 · 美团 · 美团-买单</small>
-          </div>
-          <b>5 分</b>
-        </div>
-        <p>环境不错^_^ 服务特别亲切；主要他们家素菜免费吃……而且性价比超高、味道是正宗的贵州酸汤味！建议打卡</p>
-        <div class="chips"><span>正宗</span><span>实惠</span><span>态度好</span><span>环境好</span><span>消费后评价</span><span>带图评价</span></div>
-        <div class="meta">口味 5 · 环境 5 · 服务 5 · 已回复</div>
-      </article>
-    
-      <article class="review normal">
-        <div class="review-head">
-          <div>
-            <strong>L晴天c</strong>
-            <small>2026-05-17 18:28:32 · 美团 · 美团-普通评价</small>
-          </div>
-          <b>5 分</b>
-        </div>
-        <p>环境：很干净清爽位置也好找
-性价比：很高人均4.50就有挺多菜的
-服务：很不错</p>
-        <div class="chips"><span>实惠</span><span>态度好</span><span>环境干净</span><span>消费后评价</span><span>带图评价</span></div>
-        <div class="meta">口味 5 · 环境 5 · 服务 5 · 已回复</div>
-      </article>
-    
-      <article class="review normal">
-        <div class="review-head">
-          <div>
-            <strong>匿名用户</strong>
-            <small>2026-05-17 18:10:30 · 点评 · 点评-普通评价</small>
-          </div>
-          <b>5 分</b>
-        </div>
-        <p>带一家三口来这家吃，只能说服务很到位，蔬菜水果也非常的新鲜，肉类也很嫩！！</p>
-        <div class="chips"><span>带图评价</span></div>
-        <div class="meta">口味 5 · 环境 5 · 服务 5 · 已回复</div>
-      </article>
-    
-      <article class="review normal">
-        <div class="review-head">
-          <div>
-            <strong>木木吃玩重庆</strong>
-            <small>2026-05-16 19:19:06 · 点评 · 点评-普通评价</small>
-          </div>
-          <b>5 分</b>
-        </div>
-        <p>「贵州猪板筋」非常不错</p>
-        <div class="chips"><span>味道好</span><span>带图评价</span></div>
-        <div class="meta">口味 5 · 环境 5 · 服务 5 · 已回复</div>
-      </article>
-    
-      <article class="review normal">
-        <div class="review-head">
-          <div>
-            <strong>匿名用户</strong>
-            <small>2026-05-16 18:29:56 · 点评 · 点评-普通评价</small>
-          </div>
-          <b>5 分</b>
-        </div>
-        <p>蔬菜水果不限量，人也很多，菜品也丰富，锅底味十足！！</p>
-        <div class="chips"><span>带图评价</span></div>
-        <div class="meta">口味 5 · 环境 5 · 服务 5 · 已回复</div>
-      </article>
-    
-      <article class="review normal">
-        <div class="review-head">
-          <div>
-            <strong>橘子猫和过期糖</strong>
-            <small>2026-05-16 12:15:43 · 美团 · 美团-团购</small>
-          </div>
-          <b>5 分</b>
-        </div>
-        <p>这家豆米火锅真的闭眼冲！锅底浓稠挂勺，芸豆炖得耙糯，涮啥都香。软哨、板筋必点，素菜吸满汤汁巨入味，豆米汤泡饭直接封神。服务贴心上菜快，价格实惠，人均友好，本地人都爱来，吃一次就念念不忘～</p>
-        <div class="chips"><span>软糯</span><span>醇厚</span><span>味道好</span><span>实惠</span><span>香</span><span>出餐快</span><span>消费后评价</span><span>带图评价</span></div>
-        <div class="meta">口味 5 · 环境 5 · 服务 5 · 已回复</div>
-      </article>
-    
-      <article class="review normal">
-        <div class="review-head">
-          <div>
-            <strong>落墨星辰</strong>
-            <small>2026-05-16 10:11:27 · 点评 · 点评-团购</small>
-          </div>
-          <b>5 分</b>
-        </div>
-        <p>非常好吃，喜欢叫不出名字的野菜。不踩坑，推荐大家试试，</p>
-        <div class="chips"><span>味道好</span><span>消费后评价</span></div>
-        <div class="meta">口味 5 · 环境 5 · 服务 5 · 已回复</div>
-      </article>
-    
+        <details open>
+          <summary>昨日新增评价明细（3 条）</summary>
+          <div class="review-grid">
       <article class="review normal">
         <div class="review-head">
           <div>
             <strong>一颗皮蛋</strong>
-            <small>2026-05-15 20:56:18 · 点评 · 点评-买单</small>
+            <small>2026-05-19 11:03 · 点评 · 消费后评价</small>
           </div>
           <b>5 分</b>
         </div>
-        <p>味道很贵州了，服务态度也不错，有讲解菜品，菜品也很新鲜</p>
-        <div class="chips"><span>新鲜</span><span>正宗</span><span>态度好</span><span>消费后评价</span><span>带图评价</span></div>
+        <p>，味道挺不错的，就是豆米不多，豆米真的很好吃，单加要10块，但是能理解，这个是看需要 环境：挺好的，很好找位置 服务：挺不错的有需要都能给解决 性价比：六个人都够的，蔬菜是免费的，很好吃</p>
+        <div class="chips"><span>正向/正常</span></div>
         <div class="meta">口味 5 · 环境 5 · 服务 5 · 已回复</div>
       </article>
     
       <article class="review normal">
         <div class="review-head">
           <div>
-            <strong>匿名用户</strong>
-            <small>2026-05-15 12:39:08 · 点评 · 点评-普通评价</small>
+            <strong>我是王大波</strong>
+            <small>2026-05-19 12:37 · 美团 · 消费后评价</small>
           </div>
           <b>5 分</b>
         </div>
-        <p>食材新鲜，锅底也很浓郁鲜美，野菜也多，大人小孩也喜欢吃！！</p>
-        <div class="chips"><span>带图评价</span></div>
+        <p>口味：还不错，适合不吃辣的 环境：环境干净整洁 服务：态度很好 性价比：性价比也还可以，有套餐，青菜随便选</p>
+        <div class="chips"><span>正向/正常</span></div>
         <div class="meta">口味 5 · 环境 5 · 服务 5 · 已回复</div>
       </article>
     
       <article class="review normal">
         <div class="review-head">
           <div>
-            <strong>匿名用户</strong>
-            <small>2026-05-15 12:32:30 · 美团 · 美团-普通评价</small>
+            <strong>Darlingfann</strong>
+            <small>2026-05-19 12:24 · 美团 · 美团评价</small>
           </div>
           <b>5 分</b>
         </div>
-        <p>味道不错性价比很好吃，蔬菜水果也自取！！</p>
-        <div class="chips"><span>味道好</span><span>实惠</span><span>消费后评价</span><span>带图评价</span></div>
+        <p>在星汇天街四楼，健完身就可以下楼吃了，非常方便，服务也很到位👍🏻 环境：很好 服务：很好 口味：很好</p>
+        <div class="chips"><span>正向/正常</span></div>
         <div class="meta">口味 5 · 环境 5 · 服务 5 · 已回复</div>
-      </article>
-    
-      <article class="review normal">
-        <div class="review-head">
-          <div>
-            <strong>匿名用户</strong>
-            <small>2026-05-15 12:24:13 · 点评 · 点评-普通评价</small>
-          </div>
-          <b>5 分</b>
-        </div>
-        <p>蔬菜水果免费自取，价格也很周到，牛肉猪肉呢都有！！</p>
-        <div class="chips"><span>带图评价</span></div>
-        <div class="meta">口味 5 · 环境 5 · 服务 5 · 已回复</div>
-      </article>
-    
-      <article class="review normal">
-        <div class="review-head">
-          <div>
-            <strong>匿名用户</strong>
-            <small>2026-05-15 12:10:41 · 美团 · 美团-普通评价</small>
-          </div>
-          <b>5 分</b>
-        </div>
-        <p>环境：环境卫生做的很好，干净整洁！
-口味：清汤浓郁鲜美！
-性价比：价格实惠，蔬菜水果还是不限量！</p>
-        <div class="chips"><span>干净卫生</span><span>鲜美</span><span>实惠</span><span>环境干净</span><span>消费后评价</span><span>带图评价</span></div>
-        <div class="meta">口味 5 · 环境 5 · 服务 5 · 已回复</div>
-      </article>
-    
-      <article class="review normal">
-        <div class="review-head">
-          <div>
-            <strong>qnO100406673</strong>
-            <small>2026-05-15 12:04:11 · 美团 · 美团-买单</small>
-          </div>
-          <b>5 分</b>
-        </div>
-        <p>免费的野菜很多很新鲜，菜品也不错，位置好找，就在龙湖星汇4楼，服务员很热情非常好吃😋</p>
-        <div class="chips"><span>味道好</span><span>新鲜</span><span>态度好</span><span>消费后评价</span><span>带图评价</span></div>
-        <div class="meta">口味 5 · 环境 5 · 服务 5 · 已回复</div>
-      </article>
-    
-      <article class="review normal">
-        <div class="review-head">
-          <div>
-            <strong>复调卡农315</strong>
-            <small>2026-05-14 12:53:07 · 点评 · 点评-普通评价</small>
-          </div>
-          <b>5 分</b>
-        </div>
-        <p>口味：「贵州猪板筋」味道还不错.环境不错服务态度很好。</p>
-        <div class="chips"><span>味道好</span><span>态度好</span><span>环境好</span><span>带图评价</span></div>
-        <div class="meta">口味 5 · 环境 5 · 服务 5 · 已回复</div>
-      </article>
-    
-      <article class="review normal">
-        <div class="review-head">
-          <div>
-            <strong>匿名用户</strong>
-            <small>2026-05-14 12:27:11 · 美团 · 美团-买单</small>
-          </div>
-          <b>5 分</b>
-        </div>
-        <p>很值得推荐很好吃
-尤其是一些小吃和洋芋巴巴，很巴适
-口味和我在贵州吃的一样很nice，推荐</p>
-        <div class="chips"><span>味道好</span><span>正宗</span><span>消费后评价</span><span>带图评价</span></div>
-        <div class="meta">口味 5 · 环境 5 · 服务 5 · 已回复</div>
-      </article>
-    
-      <article class="review normal">
-        <div class="review-head">
-          <div>
-            <strong>匿名用户</strong>
-            <small>2026-05-13 19:44:21 · 美团 · 美团-普通评价</small>
-          </div>
-          <b>5 分</b>
-        </div>
-        <p>牛肉鲜嫩，特别是炒饭很好吃，水果蔬菜也新鲜！</p>
-        <div class="chips"><span>味道好</span><span>鲜嫩</span><span>新鲜</span><span>消费后评价</span><span>带图评价</span></div>
-        <div class="meta">口味 5 · 环境 5 · 服务 5 · 已回复</div>
-      </article>
-    
-      <article class="review normal">
-        <div class="review-head">
-          <div>
-            <strong>匿名用户</strong>
-            <small>2026-05-13 18:32:26 · 点评 · 点评-普通评价</small>
-          </div>
-          <b>5 分</b>
-        </div>
-        <p>蔬菜水果免费，而且菜品也丰富，酸汤也很浓郁！！</p>
-        <div class="chips"><span>带图评价</span></div>
-        <div class="meta">口味 5 · 环境 5 · 服务 5 · 已回复</div>
-      </article>
-    
-      <article class="review normal">
-        <div class="review-head">
-          <div>
-            <strong>独特勤奋嘤嘤蛙</strong>
-            <small>2026-05-13 18:21:29 · 点评 · 点评-普通评价</small>
-          </div>
-          <b>5 分</b>
-        </div>
-        <p>非常好吃，非常好的服务，下次还来，大家也去试一试吧！</p>
-        <div class="chips"><span>味道好</span><span>态度好</span><span>带图评价</span></div>
-        <div class="meta">口味 5 · 环境 5 · 服务 5 · 已回复</div>
-      </article>
-    
-      <article class="review normal">
-        <div class="review-head">
-          <div>
-            <strong>匿名用户</strong>
-            <small>2026-05-13 18:13:05 · 点评 · 点评-普通评价</small>
-          </div>
-          <b>5 分</b>
-        </div>
-        <p>跟朋友一起吃这家店，服务员很热情接待我们，店里环境干净整洁，水果蔬菜都自取！！</p>
-        <div class="chips"><span>带图评价</span></div>
-        <div class="meta">口味 5 · 环境 5 · 服务 5 · 已回复</div>
-      </article>
-    
-      <article class="review normal">
-        <div class="review-head">
-          <div>
-            <strong>匿名用户</strong>
-            <small>2026-05-13 17:24:35 · 美团 · 美团-普通评价</small>
-          </div>
-          <b>5 分</b>
-        </div>
-        <p>酸汤很开胃 味道很不错 推荐大家来吃！</p>
-        <div class="chips"><span>酸爽</span><span>味道好</span><span>消费后评价</span><span>带图评价</span></div>
-        <div class="meta">口味 5 · 环境 5 · 服务 5 · 已回复</div>
-      </article>
-    
-      <article class="review normal">
-        <div class="review-head">
-          <div>
-            <strong>小木桃子呀</strong>
-            <small>2026-05-13 17:24:15 · 美团 · 美团-普通评价</small>
-          </div>
-          <b>4 分</b>
-        </div>
-        <p>服务很好都会推荐店里热卖的菜品，酸汤过很好吃，推荐</p>
-        <div class="chips"><span>味道好</span><span>推荐得当</span><span>消费后评价</span><span>带图评价</span></div>
-        <div class="meta">口味 4 · 环境 4 · 服务 4 · 已回复</div>
-      </article>
-    
-      <article class="review normal">
-        <div class="review-head">
-          <div>
-            <strong>QQ糖_3532</strong>
-            <small>2026-05-13 12:40:11 · 点评 · 点评-买单</small>
-          </div>
-          <b>5 分</b>
-        </div>
-        <p>多次来这家店了，卫生干净，服务很好，菜品新鲜，值得推荐</p>
-        <div class="chips"><span>干净卫生</span><span>新鲜</span><span>态度好</span><span>环境干净</span><span>消费后评价</span><span>带图评价</span></div>
-        <div class="meta">口味 5 · 环境 5 · 服务 5 · 已回复</div>
-      </article>
-    
-      <article class="review normal">
-        <div class="review-head">
-          <div>
-            <strong>蒟蒻粉炝黄油酥</strong>
-            <small>2026-05-13 12:34:47 · 点评 · 点评-普通评价</small>
-          </div>
-          <b>5 分</b>
-        </div>
-        <p>餐厅环境干净，服务很好，菜品新鲜丰富，口味也比较正宗，推荐。</p>
-        <div class="chips"><span>新鲜</span><span>正宗</span><span>态度好</span><span>环境干净</span><span>带图评价</span></div>
-        <div class="meta">口味 5 · 环境 5 · 服务 5 · 已回复</div>
-      </article>
-    
-      <article class="review normal">
-        <div class="review-head">
-          <div>
-            <strong>匿名用户</strong>
-            <small>2026-05-12 20:03:18 · 点评 · 点评-普通评价</small>
-          </div>
-          <b>5 分</b>
-        </div>
-        <p>跟朋友来吃没想到锅底料很足！！点的菜都烫着吃，还有蔬菜水果也是不限吃！！</p>
-        <div class="chips"><span>带图评价</span></div>
-        <div class="meta">口味 5 · 环境 5 · 服务 5 · 已回复</div>
-      </article>
-    
-      <article class="review normal">
-        <div class="review-head">
-          <div>
-            <strong>可爱诚实咔嗒蟹</strong>
-            <small>2026-05-12 19:36:54 · 点评 · 点评-普通评价</small>
-          </div>
-          <b>5 分</b>
-        </div>
-        <p>贵州糟辣蛋炒饭，洋芋粑粑，水性杨花</p>
-        <div class="chips"><span>带图评价</span></div>
-        <div class="meta">口味 5 · 环境 5 · 服务 5 · 已回复</div>
-      </article>
-    
-      <article class="review normal">
-        <div class="review-head">
-          <div>
-            <strong>匿名用户</strong>
-            <small>2026-05-12 18:38:03 · 美团 · 美团-团购</small>
-          </div>
-          <b>5 分</b>
-        </div>
-        <p>菜品新鲜，环境不错，服务态度也好。</p>
-        <div class="chips"><span>新鲜</span><span>态度好</span><span>环境好</span><span>消费后评价</span><span>带图评价</span></div>
-        <div class="meta">口味 5 · 环境 5 · 服务 5 · 已回复</div>
-      </article>
-    
-      <article class="review normal">
-        <div class="review-head">
-          <div>
-            <strong>匿名用户</strong>
-            <small>2026-05-12 13:51:36 · 点评 · 点评-普通评价</small>
-          </div>
-          <b>5 分</b>
-        </div>
-        <p>带着小孩跟朋友来吃就见服务员热情接待，进来就闻到酸汤的味道很浓郁，套餐很实惠，肉类也新鲜！</p>
-        <div class="chips"><span>带图评价</span></div>
-        <div class="meta">口味 5 · 环境 5 · 服务 5 · 已回复</div>
-      </article>
-    
-      <article class="review normal">
-        <div class="review-head">
-          <div>
-            <strong>在台砍甘蔗</strong>
-            <small>2026-05-12 13:47:57 · 点评 · 点评-普通评价</small>
-          </div>
-          <b>5 分</b>
-        </div>
-        <p>环境挺好的，味道也不错，可以来试试。</p>
-        <div class="chips"><span>味道好</span><span>环境好</span><span>带图评价</span></div>
-        <div class="meta">口味 5 · 环境 5 · 服务 5 · 已回复</div>
-      </article>
-    
-      <article class="review normal">
-        <div class="review-head">
-          <div>
-            <strong>匿名用户</strong>
-            <small>2026-05-12 13:17:14 · 点评 · 点评-普通评价</small>
-          </div>
-          <b>5 分</b>
-        </div>
-        <p>看了很多家还是选了这家店尝尝，口味可以，服务态度也很好，套餐里面的牛肉很新鲜，小吃也好吃！而且蔬菜水果也是不限量提供！！</p>
-        <div class="chips"><span>带图评价</span></div>
-        <div class="meta">口味 5 · 环境 5 · 服务 5 · 已回复</div>
-      </article>
-    
-      <article class="review normal">
-        <div class="review-head">
-          <div>
-            <strong>真勇勇敢的小婉</strong>
-            <small>2026-05-12 13:05:45 · 点评 · 点评-普通评价</small>
-          </div>
-          <b>5 分</b>
-        </div>
-        <p>味道不错，自助的菜品也很多，菜色也挺新鲜</p>
-        <div class="chips"><span>味道好</span><span>新鲜</span><span>带图评价</span></div>
-        <div class="meta">口味 5 · 环境 5 · 服务 5 · 已回复</div>
-      </article>
-    
-      <article class="review normal">
-        <div class="review-head">
-          <div>
-            <strong>飞雁ma</strong>
-            <small>2026-05-12 12:24:21 · 美团 · 美团-团购</small>
-          </div>
-          <b>4 分</b>
-        </div>
-        <p>味道不错，蔬菜品种多，食材新鲜，服务好</p>
-        <div class="chips"><span>味道好</span><span>新鲜</span><span>态度好</span><span>消费后评价</span></div>
-        <div class="meta">口味 5 · 环境 5 · 服务 5 · 已回复</div>
-      </article>
-    
-      <article class="review normal">
-        <div class="review-head">
-          <div>
-            <strong>stray.</strong>
-            <small>2026-05-12 11:52:56 · 点评 · 点评-普通评价</small>
-          </div>
-          <b>5 分</b>
-        </div>
-        <p>环境不错 价格优惠 味道很正宗很地道的贵州味 
-性价比：高
-口味：「贵州猪板筋」</p>
-        <div class="chips"><span>正宗</span><span>实惠</span><span>环境好</span><span>带图评价</span></div>
-        <div class="meta">口味 5 · 环境 5 · 服务 5 · 已回复</div>
-      </article>
-    
-      <article class="review normal">
-        <div class="review-head">
-          <div>
-            <strong>刚刚甜蜜的小菊</strong>
-            <small>2026-05-11 19:59:31 · 点评 · 点评-普通评价</small>
-          </div>
-          <b>5 分</b>
-        </div>
-        <p>点的小黄牛套餐，好吃不贵。</p>
-        <div class="chips"><span>味道好</span><span>实惠</span><span>带图评价</span></div>
-        <div class="meta">口味 5 · 环境 5 · 服务 5 · 已回复</div>
-      </article>
-    
-      <article class="review normal">
-        <div class="review-head">
-          <div>
-            <strong>云彩</strong>
-            <small>2026-05-11 19:20:18 · 点评 · 点评-普通评价</small>
-          </div>
-          <b>5 分</b>
-        </div>
-        <p>豆米火锅汤底浓稠沙糯，酸香开胃，软哨入味，汤泡饭绝了，地道贵州风味超满足 。</p>
-        <div class="chips"><span>酸爽</span><span>醇厚</span><span>味道好</span><span>正宗</span><span>带图评价</span></div>
-        <div class="meta">口味 5 · 环境 5 · 服务 5 · 已回复</div>
-      </article>
-    
-      <article class="review normal">
-        <div class="review-head">
-          <div>
-            <strong>如果不珍惜</strong>
-            <small>2026-05-11 19:00:18 · 点评 · 点评-普通评价</small>
-          </div>
-          <b>5 分</b>
-        </div>
-        <p>带朋友来路过这家叫黔山，贵州豆米火锅真香！锅底浓郁，猪板筋嚼劲十足，糟辣蛋炒饭也惊艳。环境干净，服务热情，人均合理，值得一试</p>
-        <div class="chips"><span>劲道</span><span>醇厚</span><span>味道好</span><span>实惠</span><span>香</span><span>态度好</span><span>环境干净</span><span>带图评价</span></div>
-        <div class="meta">口味 5 · 环境 5 · 服务 5 · 已回复</div>
-      </article>
-    
-      <article class="review normal">
-        <div class="review-head">
-          <div>
-            <strong>清新优秀咕唧蚊</strong>
-            <small>2026-05-11 18:52:43 · 点评 · 点评-普通评价</small>
-          </div>
-          <b>5 分</b>
-        </div>
-        <p>肉非常新鲜，服务员态度温和亲切，蔬菜水果也很新鲜！！</p>
-        <div class="chips"><span>新鲜</span><span>态度好</span><span>带图评价</span></div>
-        <div class="meta">口味 5 · 环境 5 · 服务 5 · 已回复</div>
-      </article>
-    
-      <article class="review normal">
-        <div class="review-head">
-          <div>
-            <strong>纳oo诺诺</strong>
-            <small>2026-05-11 13:02:54 · 点评 · 点评-普通评价</small>
-          </div>
-          <b>5 分</b>
-        </div>
-        <p>终于在家附近发现了一家宝藏店，以后不用跑远路了</p>
-        <div class="chips"><span>带图评价</span></div>
-        <div class="meta">口味 5 · 环境 5 · 服务 5 · 已回复</div>
-      </article>
-    
-      <article class="review normal">
-        <div class="review-head">
-          <div>
-            <strong>匿名用户</strong>
-            <small>2026-05-11 12:59:59 · 点评 · 点评-普通评价</small>
-          </div>
-          <b>5 分</b>
-        </div>
-        <p>第一次来，味道还不错哦，特别下饭，蔬菜也特别新鲜，服务也很好</p>
-        <div class="chips"><span>带图评价</span></div>
-        <div class="meta">口味 5 · 环境 5 · 服务 5 · 已回复</div>
-      </article>
-    
-      <article class="review normal">
-        <div class="review-head">
-          <div>
-            <strong>匿名用户</strong>
-            <small>2026-05-11 12:47:13 · 美团 · 美团-团购</small>
-          </div>
-          <b>5 分</b>
-        </div>
-        <p>蔬菜水果免费自取，调理味很浓郁，带一家子人来吃！</p>
-        <div class="chips"><span>香</span><span>优质评价</span><span>消费后评价</span><span>带图评价</span></div>
-        <div class="meta">口味 5 · 环境 5 · 服务 5 · 已回复</div>
-      </article>
-    
-      <article class="review normal">
-        <div class="review-head">
-          <div>
-            <strong>薄荷</strong>
-            <small>2026-05-11 02:16:26 · 点评 · 点评-普通评价</small>
-          </div>
-          <b>4.5 分</b>
-        </div>
-        <p>之前贵州豆米火锅很火，就跟朋友一起约起了吃这家豆米火锅。环境很安静也干净，那个糍粑很不错，荤菜吃了还可以去旁边自助区拿蔬菜，菜叶子这些也比较干净，看起来也新鲜。喜欢贵州酸汤的还是可以来试一下。</p>
-        <div class="chips"><span>味道好</span><span>新鲜</span><span>环境干净</span><span>安静舒适</span><span>带图评价</span></div>
-        <div class="meta">口味 4.5 · 环境 4.5 · 服务 4.5 · 已回复</div>
       </article>
     </div>
-      </details>
-    </section>
+        </details>
+      </section>
     </main>
 </body>
 </html>
