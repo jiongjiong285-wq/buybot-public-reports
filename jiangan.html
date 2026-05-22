@@ -3,6 +3,53 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Cache-Control" content="no-store">
+  <script>
+    (() => {
+      const cleanUrl = () => {
+        const url = new URL(window.location.href);
+        let changed = false;
+        for (const key of ["_t", "_refresh"]) {
+          if (url.searchParams.has(key)) {
+            url.searchParams.delete(key);
+            changed = true;
+          }
+        }
+        if (changed) {
+          window.history.replaceState(null, "", url.pathname + url.search + url.hash);
+        }
+      };
+      const replaceIfPresent = (selector, doc) => {
+        const current = document.querySelector(selector);
+        const next = doc.querySelector(selector);
+        if (current && next) {
+          current.replaceWith(next);
+        }
+      };
+      const refreshBoard = async () => {
+        try {
+          const url = new URL(window.location.href);
+          url.searchParams.set("_refresh", String(Date.now()));
+          const response = await fetch(url.toString(), { cache: "no-store" });
+          if (!response.ok) return;
+          const text = await response.text();
+          const doc = new DOMParser().parseFromString(text, "text/html");
+          if (doc.title) {
+            document.title = doc.title;
+          }
+          replaceIfPresent("header", doc);
+          replaceIfPresent(".summary", doc);
+          replaceIfPresent("main", doc);
+          cleanUrl();
+        } catch (error) {
+          console.warn("board refresh failed", error);
+        }
+      };
+      cleanUrl();
+      window.addEventListener("pageshow", cleanUrl);
+      window.setInterval(refreshBoard, 60000);
+    })();
+  </script>
   <title>江岸店采购/财务流程近30天看板</title>
   <style>
     :root { color-scheme: light; --bg: #f3f6f7; --surface: #ffffff; --line: #dfe7ea; --text: #172026; --muted: #60717a; --done: #14723b; --done-bg: #e6f6eb; --risk: #a42121; --risk-bg: #fde9e9; --warn: #805400; --warn-bg: #fff3d6; }
@@ -19,6 +66,29 @@
     .summary { display: flex; gap: 12px; flex-wrap: wrap; padding: 16px 28px; }
     .summary span { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; }
     main { padding: 0 28px 32px; }
+    .pending-panel { margin: 0 0 14px; background: #fff8e8; border: 1px solid #efd27c; border-left: 4px solid #b97500; border-radius: 8px; padding: 12px 14px; }
+    .pending-panel h2 { margin: 0; font-size: 16px; letter-spacing: 0; }
+    .pending-panel p { margin: 5px 0 0; color: var(--muted); font-size: 13px; line-height: 1.45; }
+    .pending-list { list-style: none; padding: 0; margin: 10px 0 0; display: grid; gap: 8px; }
+    .pending-list li { display: flex; justify-content: space-between; gap: 12px; padding: 9px 10px; border-radius: 8px; background: #ffffff; border: 1px solid #f0dfad; }
+    .pending-item { font-weight: 700; overflow-wrap: anywhere; }
+    .pending-meta { color: var(--muted); font-size: 12px; text-align: right; white-space: nowrap; }
+    .produce-panel { margin: 0 0 14px; background: #ffffff; border: 1px solid var(--line); border-left: 4px solid #7a8790; border-radius: 8px; padding: 12px 14px; }
+    .produce-panel.done { border-left-color: var(--done); background: #f6fbf7; }
+    .produce-panel.warn { border-left-color: #b97500; background: #fff8e8; }
+    .produce-panel.risk { border-left-color: var(--risk); background: #fff4f4; }
+    .produce-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
+    .produce-title { margin: 0; font-size: 16px; letter-spacing: 0; }
+    .produce-status { border-radius: 999px; padding: 4px 9px; font-size: 12px; line-height: 1; white-space: nowrap; border: 1px solid var(--line); background: #f8fafb; color: var(--muted); }
+    .produce-panel.done .produce-status { color: var(--done); background: var(--done-bg); border-color: #9bd8ad; }
+    .produce-panel.warn .produce-status { color: var(--warn); background: var(--warn-bg); border-color: #efd27c; }
+    .produce-panel.risk .produce-status { color: var(--risk); background: var(--risk-bg); border-color: #f3aaaa; }
+    .produce-note { margin: 6px 0 0; color: var(--muted); font-size: 13px; line-height: 1.45; }
+    .produce-list { list-style: none; padding: 0; margin: 10px 0 0; display: grid; gap: 8px; }
+    .produce-list li { display: grid; grid-template-columns: minmax(64px, .7fr) minmax(92px, .9fr) minmax(150px, 1.4fr); gap: 10px; align-items: center; padding: 9px 10px; border-radius: 8px; background: #ffffff; border: 1px solid #e6ecef; }
+    .produce-platform { font-weight: 700; overflow-wrap: anywhere; }
+    .produce-state { font-size: 13px; overflow-wrap: anywhere; }
+    .produce-row-meta { color: var(--muted); font-size: 12px; text-align: right; overflow-wrap: anywhere; }
     .desktop-table { overflow-x: auto; }
     table { width: 100%; min-width: 1180px; border-collapse: collapse; background: var(--surface); border: 1px solid var(--line); }
     th, td { border-bottom: 1px solid #e8eef0; padding: 10px; text-align: left; vertical-align: top; font-size: 13px; }
@@ -28,6 +98,7 @@
     .done { background: var(--done-bg); color: var(--done); border: 1px solid #9bd8ad; }
     .missing { background: var(--risk-bg); color: var(--risk); border: 1px solid #f3aaaa; }
     .detail { display: block; margin-top: 4px; color: inherit; opacity: .82; }
+    .tracking-link { color: inherit; text-decoration: underline; text-underline-offset: 2px; }
     .next { max-width: 260px; }
     .empty { text-align: center; color: #5d6b73; padding: 32px; }
     .mobile-orders { display: none; }
@@ -40,6 +111,20 @@
       .summary { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; padding: 12px 14px; }
       .summary span { padding: 9px 10px; font-size: 13px; line-height: 1.3; }
       main { padding: 0 12px 22px; }
+      .pending-panel { margin-bottom: 10px; padding: 11px 12px; }
+      .pending-panel h2 { font-size: 15px; }
+      .pending-panel p { font-size: 12px; }
+      .pending-list { gap: 7px; }
+      .pending-list li { display: grid; gap: 4px; padding: 9px; }
+      .pending-meta { text-align: left; white-space: normal; }
+      .produce-panel { margin-bottom: 10px; padding: 11px 12px; }
+      .produce-head { display: grid; gap: 6px; }
+      .produce-title { font-size: 15px; }
+      .produce-status { width: fit-content; }
+      .produce-note { font-size: 12px; }
+      .produce-list { gap: 7px; }
+      .produce-list li { grid-template-columns: 1fr; gap: 4px; padding: 9px; }
+      .produce-row-meta { text-align: left; }
       .desktop-table { display: none; }
       .mobile-orders { display: block; }
       .store-section { margin: 0 0 14px; }
@@ -71,6 +156,7 @@
       .step-name { font-size: 13px; font-weight: 700; }
       .step-state { font-size: 12px; color: currentColor; white-space: nowrap; }
       .step-detail { margin-top: 3px; font-size: 12px; line-height: 1.4; color: var(--muted); overflow-wrap: anywhere; }
+      .tracking-link { color: inherit; }
       .mobile-empty { display: block; background: var(--surface); border-radius: 8px; border: 1px solid var(--line); }
     }
   </style>
@@ -78,13 +164,22 @@
 <body>
   <header>
     <h1>江岸店采购/财务流程近30天看板</h1>
-    <div class="meta">生成时间：2026-05-21 08:55。绿色代表已完成，红色代表未完成或异常。</div>
+    <div class="meta">生成时间：2026-05-22 08:22。绿色代表已完成，红色代表未完成或异常。</div>
     <div class="legend"><span><i class="ok"></i>已完成</span><span><i class="bad"></i>未完成或异常</span></div>
   </header>
-  <section class="summary"><span>近30天订单：1</span><span>正常关闭：0</span><span>进行中：1</span><span>需要盯：1</span></section>
+  <section class="summary"><span>近30天订单：2</span><span>正常关闭：0</span><span>进行中：2</span><span>需要盯：2</span></section>
   <main>
+    <section class="produce-panel warn">
+      <div class="produce-head">
+        <h2 class="produce-title">今日买菜代付</h2>
+        <span class="produce-status">今日未确认</span>
+      </div>
+      <p class="produce-note">今天还没有看到买菜代付截图，也没有看到“今天没有买菜代付”的确认。</p>
+      
+    </section>
+    
     <section class="mobile-orders"><section class="store-section">
-  <div class="store-title"><h2>江岸店</h2><span>进行中 1｜需要盯 1</span></div>
+  <div class="store-title"><h2>江岸店</h2><span>进行中 2｜需要盯 2</span></div>
   <article class="order-card">
   <div class="order-head">
     <div class="order-id">江岸店-20260519-001</div>
@@ -92,11 +187,11 @@
   </div>
   <div class="order-meta">
     <div class="meta-box"><span class="meta-label">下单时间</span><span class="meta-value">05-19 21:10</span></div>
-    <div class="meta-box"><span class="meta-label">红色未完成</span><span class="meta-value">管理确认、收货确认、正常关闭</span></div>
+    <div class="meta-box"><span class="meta-label">红色未完成</span><span class="meta-value">收货确认、正常关闭</span></div>
     <div class="meta-box"><span class="meta-label">原需求</span><span class="meta-value">对讲机耳线10个</span></div>
     <div class="meta-box"><span class="meta-label">实际反馈</span><span class="meta-value">耳机线10个</span></div>
   </div>
-  <div class="next-action">下一步：补：管理确认（数量/规格变更待管理确认）</div>
+  <div class="next-action">下一步：补：收货确认（待收货确认）</div>
   <div class="timeline"><div class="mobile-step done">
   <span class="dot"></span>
   <div class="step-copy">
@@ -118,11 +213,11 @@
     <div class="step-detail">已收到</div>
   </div>
 </div>
-<div class="mobile-step missing">
+<div class="mobile-step done">
   <span class="dot"></span>
   <div class="step-copy">
-    <div class="step-line"><span class="step-name">管理确认</span><span class="step-state">未完成</span></div>
-    <div class="step-detail">数量/规格变更待管理确认</div>
+    <div class="step-line"><span class="step-name">管理确认</span><span class="step-state">完成</span></div>
+    <div class="step-detail">无需管理确认</div>
   </div>
 </div>
 <div class="mobile-step done">
@@ -136,7 +231,7 @@
   <span class="dot"></span>
   <div class="step-copy">
     <div class="step-line"><span class="step-name">运单追踪</span><span class="step-state">完成</span></div>
-    <div class="step-detail">待快递公司和运单号</div>
+    <div class="step-detail"><a class="tracking-link" href="https://m.kuaidi100.com/result.jsp?nu=JT3163767824310" target="_blank" rel="noopener noreferrer">JT3163767824310</a></div>
   </div>
 </div>
 <div class="mobile-step missing">
@@ -151,6 +246,75 @@
   <div class="step-copy">
     <div class="step-line"><span class="step-name">正常关闭</span><span class="step-state">未完成</span></div>
     <div class="step-detail">已发货待收货</div>
+  </div>
+</div></div>
+</article>
+<article class="order-card">
+  <div class="order-head">
+    <div class="order-id">江岸店-20260521-001</div>
+    <div class="status-pill needs">已报账待运单</div>
+  </div>
+  <div class="order-meta">
+    <div class="meta-box"><span class="meta-label">下单时间</span><span class="meta-value">05-21 09:34</span></div>
+    <div class="meta-box"><span class="meta-label">红色未完成</span><span class="meta-value">运单追踪、收货确认、正常关闭</span></div>
+    <div class="meta-box"><span class="meta-label">原需求</span><span class="meta-value">灭火箱3个</span></div>
+    <div class="meta-box"><span class="meta-label">实际反馈</span><span class="meta-value">灭火箱3个</span></div>
+  </div>
+  <div class="next-action">下一步：补：运单追踪（待快递公司和运单号）</div>
+  <div class="timeline"><div class="mobile-step done">
+  <span class="dot"></span>
+  <div class="step-copy">
+    <div class="step-line"><span class="step-name">采购单生成</span><span class="step-state">完成</span></div>
+    <div class="step-detail">原需求：灭火箱3个</div>
+  </div>
+</div>
+<div class="mobile-step done">
+  <span class="dot"></span>
+  <div class="step-copy">
+    <div class="step-line"><span class="step-name">买货反馈</span><span class="step-state">完成</span></div>
+    <div class="step-detail">实际：灭火箱3个</div>
+  </div>
+</div>
+<div class="mobile-step done">
+  <span class="dot"></span>
+  <div class="step-copy">
+    <div class="step-line"><span class="step-name">发起人收到</span><span class="step-state">完成</span></div>
+    <div class="step-detail">已收到</div>
+  </div>
+</div>
+<div class="mobile-step done">
+  <span class="dot"></span>
+  <div class="step-copy">
+    <div class="step-line"><span class="step-name">管理确认</span><span class="step-state">完成</span></div>
+    <div class="step-detail">无需管理确认</div>
+  </div>
+</div>
+<div class="mobile-step done">
+  <span class="dot"></span>
+  <div class="step-copy">
+    <div class="step-line"><span class="step-name">财务报账</span><span class="step-state">完成</span></div>
+    <div class="step-detail">已报账</div>
+  </div>
+</div>
+<div class="mobile-step missing">
+  <span class="dot"></span>
+  <div class="step-copy">
+    <div class="step-line"><span class="step-name">运单追踪</span><span class="step-state">未完成</span></div>
+    <div class="step-detail">待快递公司和运单号</div>
+  </div>
+</div>
+<div class="mobile-step missing">
+  <span class="dot"></span>
+  <div class="step-copy">
+    <div class="step-line"><span class="step-name">收货确认</span><span class="step-state">未完成</span></div>
+    <div class="step-detail">待收货确认</div>
+  </div>
+</div>
+<div class="mobile-step missing">
+  <span class="dot"></span>
+  <div class="step-copy">
+    <div class="step-line"><span class="step-name">正常关闭</span><span class="step-state">未完成</span></div>
+    <div class="step-detail">已报账待运单</div>
   </div>
 </div></div>
 </article>
@@ -180,12 +344,26 @@
   <td data-label="采购单生成"><div class="step done">完成<span class="detail">原需求：对讲机耳线10个</span></div></td>
 <td data-label="买货反馈"><div class="step done">完成<span class="detail">实际：耳机线10个</span></div></td>
 <td data-label="发起人收到"><div class="step done">完成<span class="detail">已收到</span></div></td>
-<td data-label="管理确认"><div class="step missing">未完成<span class="detail">数量/规格变更待管理确认</span></div></td>
+<td data-label="管理确认"><div class="step done">完成<span class="detail">无需管理确认</span></div></td>
 <td data-label="财务报账"><div class="step done">完成<span class="detail">已报账</span></div></td>
-<td data-label="运单追踪"><div class="step done">完成<span class="detail">待快递公司和运单号</span></div></td>
+<td data-label="运单追踪"><div class="step done">完成<span class="detail"><a class="tracking-link" href="https://m.kuaidi100.com/result.jsp?nu=JT3163767824310" target="_blank" rel="noopener noreferrer">JT3163767824310</a></span></div></td>
 <td data-label="收货确认"><div class="step missing">未完成<span class="detail">待收货确认</span></div></td>
 <td data-label="正常关闭"><div class="step missing">未完成<span class="detail">已发货待收货</span></div></td>
-  <td class="next" data-label="下一步">补：管理确认（数量/规格变更待管理确认）</td>
+  <td class="next" data-label="下一步">补：收货确认（待收货确认）</td>
+</tr>
+<tr>
+  <td data-label="店铺">江岸店</td>
+  <td data-label="订单号">江岸店-20260521-001</td>
+  <td data-label="当前状态">已报账待运单</td>
+  <td data-label="采购单生成"><div class="step done">完成<span class="detail">原需求：灭火箱3个</span></div></td>
+<td data-label="买货反馈"><div class="step done">完成<span class="detail">实际：灭火箱3个</span></div></td>
+<td data-label="发起人收到"><div class="step done">完成<span class="detail">已收到</span></div></td>
+<td data-label="管理确认"><div class="step done">完成<span class="detail">无需管理确认</span></div></td>
+<td data-label="财务报账"><div class="step done">完成<span class="detail">已报账</span></div></td>
+<td data-label="运单追踪"><div class="step missing">未完成<span class="detail">待快递公司和运单号</span></div></td>
+<td data-label="收货确认"><div class="step missing">未完成<span class="detail">待收货确认</span></div></td>
+<td data-label="正常关闭"><div class="step missing">未完成<span class="detail">已报账待运单</span></div></td>
+  <td class="next" data-label="下一步">补：运单追踪（待快递公司和运单号）</td>
 </tr></tbody>
       </table>
     </section>

@@ -3,6 +3,53 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Cache-Control" content="no-store">
+  <script>
+    (() => {
+      const cleanUrl = () => {
+        const url = new URL(window.location.href);
+        let changed = false;
+        for (const key of ["_t", "_refresh"]) {
+          if (url.searchParams.has(key)) {
+            url.searchParams.delete(key);
+            changed = true;
+          }
+        }
+        if (changed) {
+          window.history.replaceState(null, "", url.pathname + url.search + url.hash);
+        }
+      };
+      const replaceIfPresent = (selector, doc) => {
+        const current = document.querySelector(selector);
+        const next = doc.querySelector(selector);
+        if (current && next) {
+          current.replaceWith(next);
+        }
+      };
+      const refreshBoard = async () => {
+        try {
+          const url = new URL(window.location.href);
+          url.searchParams.set("_refresh", String(Date.now()));
+          const response = await fetch(url.toString(), { cache: "no-store" });
+          if (!response.ok) return;
+          const text = await response.text();
+          const doc = new DOMParser().parseFromString(text, "text/html");
+          if (doc.title) {
+            document.title = doc.title;
+          }
+          replaceIfPresent("header", doc);
+          replaceIfPresent(".summary", doc);
+          replaceIfPresent("main", doc);
+          cleanUrl();
+        } catch (error) {
+          console.warn("board refresh failed", error);
+        }
+      };
+      cleanUrl();
+      window.addEventListener("pageshow", cleanUrl);
+      window.setInterval(refreshBoard, 60000);
+    })();
+  </script>
   <title>采购/财务流程看板</title>
   <style>
     * { box-sizing: border-box; }
@@ -18,7 +65,7 @@
 <body>
   <header>
     <h1>采购/财务流程看板</h1>
-    <p>生成时间：2026-05-21 08:55。请按店铺分别查看，不混合展示。</p>
+    <p>生成时间：2026-05-22 08:22。请按店铺分别查看，不混合展示。</p>
   </header>
   <main><a class="store-link" href="guanghuan.html">光环店<span>查看本店近30天流程</span></a>
 <a class="store-link" href="xinghui.html">星汇店<span>查看本店近30天流程</span></a>
