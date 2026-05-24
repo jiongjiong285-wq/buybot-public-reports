@@ -1,0 +1,365 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>三店评价日报</title>
+  <style>
+    :root { --ink:#172033; --muted:#667085; --line:#d8dee8; --bg:#f6f7f9; --panel:#fff; --green:#18794e; --gold:#b7791f; --soft:#eef3f7; }
+    * { box-sizing:border-box; }
+    body { margin:0; background:var(--bg); color:var(--ink); font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif; }
+    header { padding:28px 36px 20px; background:#fff; border-bottom:1px solid var(--line); }
+    header h1 { margin:0 0 8px; font-size:28px; letter-spacing:0; }
+    header p { margin:0; color:var(--muted); }
+    nav { display:flex; gap:10px; margin-top:16px; flex-wrap:wrap; }
+    nav a { color:var(--ink); text-decoration:none; border:1px solid var(--line); background:var(--soft); border-radius:6px; padding:8px 12px; font-size:14px; }
+    main { padding:24px 36px 48px; max-width:1360px; margin:auto; }
+    .overview, .metrics, .split { display:grid; gap:14px; }
+    .overview, .metrics { grid-template-columns:repeat(5,minmax(130px,1fr)); margin:14px 0; }
+    .metric { background:var(--panel); border:1px solid var(--line); border-radius:8px; padding:14px; min-height:92px; }
+    .metric span { display:block; color:var(--muted); font-size:13px; }
+    .metric strong { display:block; font-size:30px; margin:8px 0 4px; letter-spacing:0; }
+    .metric small { color:var(--muted); }
+    .notice { border-left:4px solid var(--gold); background:#fff9df; padding:12px 14px; margin:14px 0; }
+    .store-section { margin-top:26px; }
+    .section-title p { margin:0 0 2px; color:#315f95; font-weight:700; }
+    .section-title h2 { margin:0; font-size:24px; }
+    .split { grid-template-columns:1fr 1fr; }
+    .panel, details { background:var(--panel); border:1px solid var(--line); border-radius:8px; padding:16px; margin-top:14px; }
+    .panel h3 { margin:0 0 12px; font-size:17px; }
+    .advice { margin:0; padding-left:20px; line-height:1.75; }
+    summary { cursor:pointer; font-weight:700; }
+    .review-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; margin-top:14px; }
+    .review-grid.compact { grid-template-columns:1fr; }
+    .review { border:1px solid var(--line); border-radius:8px; padding:14px; background:#fff; }
+    .review.watch { border-color:#e4b15a; background:#fffaf1; }
+    .review-head { display:flex; justify-content:space-between; gap:12px; align-items:flex-start; }
+    .review-head small { display:block; color:var(--muted); margin-top:3px; line-height:1.4; }
+    .review-head b { color:var(--green); white-space:nowrap; }
+    .review.watch .review-head b { color:#9f5800; }
+    .review p { margin:12px 0; line-height:1.65; white-space:pre-wrap; }
+    .chips { display:flex; flex-wrap:wrap; gap:8px; }
+    .chips span { border:1px solid var(--line); border-radius:999px; padding:4px 8px; background:#fbfcfd; color:#344056; font-size:12px; }
+    .meta, .empty { color:var(--muted); font-size:12px; margin-top:10px; }
+    @media (max-width: 900px) { header, main { padding-left:18px; padding-right:18px; } .overview, .metrics, .split, .review-grid { grid-template-columns:1fr; } }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>三店评价日报</h1>
+    <p>生成时间：2026-05-24 08:17 · 日报统计日期：2026-05-23</p>
+    <nav><a href='#L1'>L1 光环店</a><a href='#L2'>L2 星汇店</a><a href='#L3'>L3 江岸店</a></nav>
+  </header>
+  <main>
+      <div class="overview">
+        <div class='metric'><span>昨日新增</span><strong>17</strong><small>2026-05-23</small></div>
+        <div class='metric'><span>平均评分</span><strong>4.91</strong><small>三店合计</small></div>
+        <div class='metric'><span>3.5分及以下</span><strong>0</strong><small>含正向低分</small></div>
+        <div class='metric'><span>需改进项</span><strong>0</strong><small>只含真实负向</small></div>
+        <div class='metric'><span>当前未回复</span><strong>0</strong><small>点评/美团复核</small></div>
+      </div>
+      <div class="notice">本次为日报：只分析 2026-05-23 新增评价，不发送周报，也不单独发送风险提醒。每天至少要达到 3 条真实好评/新增评价基数。</div>
+    
+      <section id="L1" class="store-section">
+        <div class="section-title">
+          <div><p>L1</p><h2>光环店</h2></div>
+        </div>
+        <div class="metrics">
+          <div class='metric'><span>昨日新增</span><strong>0</strong><small>2026-05-23</small></div>
+          <div class='metric'><span>平均评分</span><strong>0</strong><small>昨日</small></div>
+          <div class='metric'><span>3.5分及以下</span><strong>0</strong><small>含正向低分</small></div>
+          <div class='metric'><span>需改进项</span><strong>0</strong><small>真实负向</small></div>
+          <div class='metric'><span>3条基数</span><strong>未达标</strong><small>每日目标</small></div>
+          <div class='metric'><span>当前未回复</span><strong>0</strong><small>点评/美团复核</small></div>
+        </div>
+        <div class="split">
+          <div class="panel"><h3>表现好的方面</h3><ul class="advice"><li>非常棒！昨天没有差评，继续努力。 昨天没有新增评价，暂时没有新的顾客正向反馈；今天要把餐后邀评和真实好评沉淀补起来。</li></ul></div>
+          <div class="panel"><h3>需要改正的方面</h3><ul class="advice"><li>昨天没有新增评价；请加强评价管理，每天需要增加 3 条以上真实好评/新增评价。 昨天没有需要单独列为改进项的差评，但新增评价为 0；店长要复盘餐后邀评动作，避免评价断档。</li></ul></div>
+        </div>
+        <div class="panel">
+          <h3>3.5分及以下需改进评价</h3>
+          <div class="review-grid compact"><p class='empty'>昨日无需要单独列为改进项的 3.5 分及以下评价。</p></div>
+        </div>
+        <details open>
+          <summary>昨日新增评价明细（0 条）</summary>
+          <div class="review-grid"><p class='empty'>昨日无新增评价。</p></div>
+        </details>
+      </section>
+    
+
+      <section id="L2" class="store-section">
+        <div class="section-title">
+          <div><p>L2</p><h2>星汇店</h2></div>
+        </div>
+        <div class="metrics">
+          <div class='metric'><span>昨日新增</span><strong>14</strong><small>2026-05-23</small></div>
+          <div class='metric'><span>平均评分</span><strong>4.93</strong><small>昨日</small></div>
+          <div class='metric'><span>3.5分及以下</span><strong>0</strong><small>含正向低分</small></div>
+          <div class='metric'><span>需改进项</span><strong>0</strong><small>真实负向</small></div>
+          <div class='metric'><span>3条基数</span><strong>达标</strong><small>每日目标</small></div>
+          <div class='metric'><span>当前未回复</span><strong>0</strong><small>点评/美团复核</small></div>
+        </div>
+        <div class="split">
+          <div class="panel"><h3>表现好的方面</h3><ul class="advice"><li>非常棒！昨天没有差评，继续努力。 顾客认可锅底口味、食材新鲜、蔬菜补充、服务响应、环境卫生、套餐性价比和位置便利。店长要继续把这些具体优点做稳，并争取更多顾客主动评价。</li></ul></div>
+          <div class="panel"><h3>需要改正的方面</h3><ul class="advice"><li>昨天新增 14 条，达到每天至少 3 条基数；请继续稳定增加真实好评。 昨天没有需要单独列为改进项的差评；继续保持出品、服务和环境稳定，不要因为零差评放松现场巡查。</li></ul></div>
+        </div>
+        <div class="panel">
+          <h3>3.5分及以下需改进评价</h3>
+          <div class="review-grid compact"><p class='empty'>昨日无需要单独列为改进项的 3.5 分及以下评价。</p></div>
+        </div>
+        <details open>
+          <summary>昨日新增评价明细（14 条）</summary>
+          <div class="review-grid">
+      <article class="review normal">
+        <div class="review-head">
+          <div>
+            <strong>酒鬼花炝拌空心菜</strong>
+            <small>2026-05-23 19:26 · 点评 · 点评评价</small>
+          </div>
+          <b>5 分</b>
+        </div>
+        <p>这家环境非常好，服务员态度也很好，整体体验感超棒，味道也很不错。</p>
+        <div class="chips"><span>正向/正常</span></div>
+        <div class="meta">口味 5 · 环境 5 · 服务 5 · 已回复</div>
+      </article>
+    
+      <article class="review normal">
+        <div class="review-head">
+          <div>
+            <strong>匿名用户</strong>
+            <small>2026-05-23 19:03 · 点评 · 打卡后评价</small>
+          </div>
+          <b>5 分</b>
+        </div>
+        <p>特别牛逼，吃饭的时间这一整层楼都飘着贵州酸汤的味道超级香，服务也不错，有一个声音很温柔的男孩儿</p>
+        <div class="chips"><span>正向/正常</span></div>
+        <div class="meta">口味 5 · 环境 5 · 服务 5 · 已回复</div>
+      </article>
+    
+      <article class="review normal">
+        <div class="review-head">
+          <div>
+            <strong>点小评7716776834</strong>
+            <small>2026-05-23 14:00 · 点评 · 点评评价</small>
+          </div>
+          <b>5 分</b>
+        </div>
+        <p>青菜类别很多，菜品很新鲜，推荐过来吃</p>
+        <div class="chips"><span>正向/正常</span></div>
+        <div class="meta">口味 5 · 环境 5 · 服务 5 · 已回复</div>
+      </article>
+    
+      <article class="review normal">
+        <div class="review-head">
+          <div>
+            <strong>匿名用户</strong>
+            <small>2026-05-23 13:22 · 点评 · 打卡后评价</small>
+          </div>
+          <b>5 分</b>
+        </div>
+        <p>口感很好，点的清汤烫青菜特别好吃，对于不吃辣的很健康！！</p>
+        <div class="chips"><span>正向/正常</span></div>
+        <div class="meta">口味 5 · 环境 5 · 服务 5 · 已回复</div>
+      </article>
+    
+      <article class="review normal">
+        <div class="review-head">
+          <div>
+            <strong>匿名用户</strong>
+            <small>2026-05-23 12:21 · 点评 · 消费后评价</small>
+          </div>
+          <b>5 分</b>
+        </div>
+        <p>带着一家子人来吃，服务员很热情，孩子有点闹腾，还给玩具玩，肉菜很鲜嫩，特别是那个糟辣蛋炒饭好吃，分量也多！</p>
+        <div class="chips"><span>正向/正常</span></div>
+        <div class="meta">口味 5 · 环境 5 · 服务 5 · 已回复</div>
+      </article>
+    
+      <article class="review normal">
+        <div class="review-head">
+          <div>
+            <strong>匿名用户</strong>
+            <small>2026-05-23 11:45 · 点评 · 打卡后评价</small>
+          </div>
+          <b>5 分</b>
+        </div>
+        <p>性价比：菜品丰富价格实惠 服务：服务很热情，每次上菜都会介绍菜名与吃法</p>
+        <div class="chips"><span>正向/正常</span></div>
+        <div class="meta">口味 5 · 环境 5 · 服务 5 · 已回复</div>
+      </article>
+    
+      <article class="review normal">
+        <div class="review-head">
+          <div>
+            <strong>十五的月亮十六圆</strong>
+            <small>2026-05-23 08:01 · 点评 · 消费后评价</small>
+          </div>
+          <b>4 分</b>
+        </div>
+        <p>环境：在龙湖星汇天街四楼，位置还是好找，旁边有个扶梯，我们是刚好在这里逛街，看了那么多家，看到他家人气还可以 随后选择的他家。 口味：要点他们家的酸汤特色锅底，因为喝汤真的好喝，我儿豁嘛！菜品新鲜度也还是阔以。只不过这个洋芋粑粑炸的有点......</p>
+        <div class="chips"><span>正向/正常</span></div>
+        <div class="meta">口味 4 · 环境 4.5 · 服务 5 · 已回复</div>
+      </article>
+    
+      <article class="review normal">
+        <div class="review-head">
+          <div>
+            <strong>李悦425</strong>
+            <small>2026-05-23 18:58 · 美团 · 消费后评价</small>
+          </div>
+          <b>5 分</b>
+        </div>
+        <p>菜品新鲜好吃，份量足，值得推荐。非常棒</p>
+        <div class="chips"><span>正向/正常</span></div>
+        <div class="meta">口味 5 · 环境 5 · 服务 5 · 已回复</div>
+      </article>
+    
+      <article class="review normal">
+        <div class="review-head">
+          <div>
+            <strong>fj</strong>
+            <small>2026-05-23 18:45 · 美团 · 美团评价</small>
+          </div>
+          <b>5 分</b>
+        </div>
+        <p>非常好吃，下次还会来，大人孩子都满足的口味</p>
+        <div class="chips"><span>正向/正常</span></div>
+        <div class="meta">口味 5 · 环境 5 · 服务 5 · 已回复</div>
+      </article>
+    
+      <article class="review normal">
+        <div class="review-head">
+          <div>
+            <strong>VDM100564697</strong>
+            <small>2026-05-23 17:55 · 美团 · 消费后评价</small>
+          </div>
+          <b>5 分</b>
+        </div>
+        <p>【口味】味道很好吃，糟还叫得很味 【环境】环境干净整洁 【服务】周到细心 【性价比】性价比高，二个人人均五十左右，素菜自助，总类多</p>
+        <div class="chips"><span>正向/正常</span></div>
+        <div class="meta">口味 5 · 环境 5 · 服务 5 · 已回复</div>
+      </article>
+    
+      <article class="review normal">
+        <div class="review-head">
+          <div>
+            <strong>猫的名字丑哭了</strong>
+            <small>2026-05-23 14:04 · 美团 · 消费后评价</small>
+          </div>
+          <b>5 分</b>
+        </div>
+        <p>口味：还蛮不错的味道，就在天街里面，上楼就看到了很显眼，服务态度很好，菜品也很新鲜，推荐大家下一次过来享受美食</p>
+        <div class="chips"><span>正向/正常</span></div>
+        <div class="meta">口味 5 · 环境 5 · 服务 5 · 已回复</div>
+      </article>
+    
+      <article class="review normal">
+        <div class="review-head">
+          <div>
+            <strong>匿名用户</strong>
+            <small>2026-05-23 12:38 · 美团 · 消费后评价</small>
+          </div>
+          <b>5 分</b>
+        </div>
+        <p>环境很好，口味大人孩子都喜欢吃，菜品新鲜味道不错。</p>
+        <div class="chips"><span>正向/正常</span></div>
+        <div class="meta">口味 5 · 环境 5 · 服务 5 · 已回复</div>
+      </article>
+    
+      <article class="review normal">
+        <div class="review-head">
+          <div>
+            <strong>匿名用户</strong>
+            <small>2026-05-23 12:26 · 美团 · 美团评价</small>
+          </div>
+          <b>5 分</b>
+        </div>
+        <p>锅汤鲜美很有食欲，搭配上调料就更绝绝子！！青菜也多也都是自取，价格也不贵</p>
+        <div class="chips"><span>正向/正常</span></div>
+        <div class="meta">口味 5 · 环境 5 · 服务 5 · 已回复</div>
+      </article>
+    
+      <article class="review normal">
+        <div class="review-head">
+          <div>
+            <strong>fau938101163</strong>
+            <small>2026-05-23 11:46 · 美团 · 美团评价</small>
+          </div>
+          <b>5 分</b>
+        </div>
+        <p>好久没有吃到味道这么赞的贵州豆米火锅了，他们的环境非常不错，菜品狠新鲜。</p>
+        <div class="chips"><span>正向/正常</span></div>
+        <div class="meta">口味 5 · 环境 5 · 服务 5 · 已回复</div>
+      </article>
+    </div>
+        </details>
+      </section>
+    
+
+      <section id="L3" class="store-section">
+        <div class="section-title">
+          <div><p>L3</p><h2>江岸店</h2></div>
+        </div>
+        <div class="metrics">
+          <div class='metric'><span>昨日新增</span><strong>3</strong><small>2026-05-23</small></div>
+          <div class='metric'><span>平均评分</span><strong>4.83</strong><small>昨日</small></div>
+          <div class='metric'><span>3.5分及以下</span><strong>0</strong><small>含正向低分</small></div>
+          <div class='metric'><span>需改进项</span><strong>0</strong><small>真实负向</small></div>
+          <div class='metric'><span>3条基数</span><strong>达标</strong><small>每日目标</small></div>
+          <div class='metric'><span>当前未回复</span><strong>0</strong><small>点评/美团复核</small></div>
+        </div>
+        <div class="split">
+          <div class="panel"><h3>表现好的方面</h3><ul class="advice"><li>非常棒！昨天没有差评，继续努力。 顾客认可锅底口味、食材新鲜、蔬菜补充和套餐性价比。店长要继续把这些具体优点做稳，并争取更多顾客主动评价。</li></ul></div>
+          <div class="panel"><h3>需要改正的方面</h3><ul class="advice"><li>昨天新增 3 条，达到每天至少 3 条基数；请继续稳定增加真实好评。 昨天没有需要单独列为改进项的差评；继续保持出品、服务和环境稳定，不要因为零差评放松现场巡查。</li></ul></div>
+        </div>
+        <div class="panel">
+          <h3>3.5分及以下需改进评价</h3>
+          <div class="review-grid compact"><p class='empty'>昨日无需要单独列为改进项的 3.5 分及以下评价。</p></div>
+        </div>
+        <details open>
+          <summary>昨日新增评价明细（3 条）</summary>
+          <div class="review-grid">
+      <article class="review normal">
+        <div class="review-head">
+          <div>
+            <strong>小麦焖芒果</strong>
+            <small>2026-05-23 16:57 · 点评 · 消费后评价</small>
+          </div>
+          <b>4.5 分</b>
+        </div>
+        <p>「手工棒棒面」「包浆小豆腐」「包浆小豆腐」很好吃，外面酥脆，里面嫩嫩的。推荐。其他，一般。</p>
+        <div class="chips"><span>正向/正常</span></div>
+        <div class="meta">口味 4.5 · 环境 4.5 · 服务 4.5 · 已回复</div>
+      </article>
+    
+      <article class="review normal">
+        <div class="review-head">
+          <div>
+            <strong>不要名字可不可以</strong>
+            <small>2026-05-23 11:53 · 点评 · 消费后评价</small>
+          </div>
+          <b>5 分</b>
+        </div>
+        <p>团购的双人餐性价比真的绝了，价格亲民特别划算，两个人吃得饱饱的完全不浪费。 黔山苗岭风味豆米火锅，锅底熬得浓稠鲜香，豆子炖得软烂，配菜自助，选择性大，分量实在，食材新鲜地道，涮完裹着汤汁吃口感超棒。</p>
+        <div class="chips"><span>正向/正常</span></div>
+        <div class="meta">口味 5 · 环境 5 · 服务 5 · 已回复</div>
+      </article>
+    
+      <article class="review normal">
+        <div class="review-head">
+          <div>
+            <strong>萍</strong>
+            <small>2026-05-23 07:26 · 点评 · 消费后评价</small>
+          </div>
+          <b>5 分</b>
+        </div>
+        <p>第二次去吃它家了，味道、食材、坏境整体都还不错</p>
+        <div class="chips"><span>正向/正常</span></div>
+        <div class="meta">口味 4.5 · 环境 4.5 · 服务 4.5 · 已回复</div>
+      </article>
+    </div>
+        </details>
+      </section>
+    </main>
+</body>
+</html>
