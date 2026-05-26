@@ -1,43 +1,180 @@
 <!doctype html>
-<html lang='zh-CN'>
+<html lang="zh-CN">
 <head>
-<meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'>
-<title>L3 江岸店评价周报</title>
-<style>
-:root{--bg:#f7f8fa;--ink:#1f2933;--muted:#687386;--line:#d9dee7;--panel:#fff;--green:#157347;--amber:#9a6700;--red:#b42318;--blue:#1d4f91;}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.55 -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;letter-spacing:0}a{color:var(--blue);text-decoration:none}.wrap{max-width:1180px;margin:0 auto;padding:24px}header{padding:26px 0 18px;border-bottom:1px solid var(--line);margin-bottom:18px}header p{margin:0 0 6px;color:var(--muted)}h1{margin:0;font-size:30px;line-height:1.2}nav{display:flex;gap:10px;flex-wrap:wrap;margin:16px 0}nav a,.store-head a{border:1px solid var(--line);background:#fff;padding:7px 10px;border-radius:6px}.overview,.metrics{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:10px;margin:14px 0}.metric{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:12px;min-height:86px}.metric span,.metric small{display:block;color:var(--muted)}.metric strong{display:block;font-size:28px;line-height:1.2;margin:4px 0}.notice,.advice,.block{background:#fff;border:1px solid var(--line);border-radius:8px;padding:14px 16px;margin:12px 0}.notice{border-left:4px solid var(--blue)}.store{margin:24px 0 32px}.store-head{display:flex;align-items:end;justify-content:space-between;gap:16px;margin:0 0 8px}.store-head p{margin:0;color:var(--muted)}h2{font-size:22px;margin:0}h3{font-size:16px;margin:0 0 10px}.advice p{margin:6px 0}.table-wrap{overflow-x:auto}table{border-collapse:collapse;width:100%;background:#fff}th,td{border-top:1px solid var(--line);padding:10px;text-align:left;vertical-align:top}th{color:#354052;background:#f0f3f7}td span,td em{color:var(--muted);font-style:normal}.empty{color:var(--muted);margin:0}.recent{margin:0;padding-left:20px}.recent li{margin:6px 0}.tag-good{color:var(--green)}.tag-warn{color:var(--amber)}.tag-bad{color:var(--red)}footer{color:var(--muted);border-top:1px solid var(--line);padding:16px 0;margin-top:20px}@media(max-width:900px){.overview,.metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.store-head{display:block}h1{font-size:24px}.wrap{padding:16px}}@media(max-width:520px){.overview,.metrics{grid-template-columns:1fr}}
-</style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>L3 江岸店评价日报</title>
+  <style>
+    :root { --ink:#172033; --muted:#667085; --line:#d8dee8; --bg:#f6f7f9; --panel:#fff; --green:#18794e; --gold:#b7791f; --soft:#eef3f7; }
+    * { box-sizing:border-box; }
+    body { margin:0; background:var(--bg); color:var(--ink); font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif; }
+    header { padding:28px 36px 20px; background:#fff; border-bottom:1px solid var(--line); }
+    header h1 { margin:0 0 8px; font-size:28px; letter-spacing:0; }
+    header p { margin:0; color:var(--muted); }
+    nav { display:flex; gap:10px; margin-top:16px; flex-wrap:wrap; }
+    nav a { color:var(--ink); text-decoration:none; border:1px solid var(--line); background:var(--soft); border-radius:6px; padding:8px 12px; font-size:14px; }
+    main { padding:24px 36px 48px; max-width:1360px; margin:auto; }
+    .overview, .metrics, .split { display:grid; gap:14px; }
+    .overview, .metrics { grid-template-columns:repeat(5,minmax(130px,1fr)); margin:14px 0; }
+    .metric { background:var(--panel); border:1px solid var(--line); border-radius:8px; padding:14px; min-height:92px; }
+    .metric span { display:block; color:var(--muted); font-size:13px; }
+    .metric strong { display:block; font-size:30px; margin:8px 0 4px; letter-spacing:0; }
+    .metric small { color:var(--muted); }
+    .notice { border-left:4px solid var(--gold); background:#fff9df; padding:12px 14px; margin:14px 0; }
+    .store-section { margin-top:26px; }
+    .section-title p { margin:0 0 2px; color:#315f95; font-weight:700; }
+    .section-title h2 { margin:0; font-size:24px; }
+    .split { grid-template-columns:1fr 1fr; }
+    .panel, details { background:var(--panel); border:1px solid var(--line); border-radius:8px; padding:16px; margin-top:14px; }
+    .panel h3 { margin:0 0 12px; font-size:17px; }
+    .advice { margin:0; padding-left:20px; line-height:1.75; }
+    summary { cursor:pointer; font-weight:700; }
+    .review-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; margin-top:14px; }
+    .review-grid.compact { grid-template-columns:1fr; }
+    .review { border:1px solid var(--line); border-radius:8px; padding:14px; background:#fff; }
+    .review.watch { border-color:#e4b15a; background:#fffaf1; }
+    .review-head { display:flex; justify-content:space-between; gap:12px; align-items:flex-start; }
+    .review-head small { display:block; color:var(--muted); margin-top:3px; line-height:1.4; }
+    .review-head b { color:var(--green); white-space:nowrap; }
+    .review.watch .review-head b { color:#9f5800; }
+    .review p { margin:12px 0; line-height:1.65; white-space:pre-wrap; }
+    .chips { display:flex; flex-wrap:wrap; gap:8px; }
+    .chips span { border:1px solid var(--line); border-radius:999px; padding:4px 8px; background:#fbfcfd; color:#344056; font-size:12px; }
+    .meta, .empty { color:var(--muted); font-size:12px; margin-top:10px; }
+    @media (max-width: 900px) { header, main { padding-left:18px; padding-right:18px; } .overview, .metrics, .split, .review-grid { grid-template-columns:1fr; } }
+  </style>
 </head>
-<body><main class='wrap'><header><p>生成时间：2026-05-25 08:31 ｜ 统计范围：2026-05-18 至 2026-05-24</p><h1>L3 江岸店评价周报</h1></header>
-    <section id='L3' class='store'>
-      <div class='store-head'><div><p>L3 江岸店</p><h2>黔山苗岭贵州豆米火锅（江岸天街店）</h2></div><a href='jiangan.html'>单店看板</a></div>
-      <div class='metrics'>
-        <div class='metric'><span>近7天新增</span><strong>34</strong><small>5/18-5/24</small></div>
-        <div class='metric'><span>昨日新增</span><strong>2</strong><small>5/24</small></div>
-        <div class='metric'><span>平均评分</span><strong>4.78</strong><small>近7天</small></div>
-        <div class='metric'><span>需改进项</span><strong>2</strong><small>3.5分及以下真实负向</small></div>
-        <div class='metric'><span>本次回复</span><strong>2</strong><small>未回复已处理</small></div>
-        <div class='metric'><span>当前未回复</span><strong>0</strong><small>全部时间复核</small></div>
-      </div>
-      <div class='advice'><p><b>昨日状态：</b>昨天有 1 条需改进评价，请店长当天复盘。 昨天新增 2 条，低于每天至少3条基数；必须加强评价管理，每天需要增加3条以上。</p><p><b>表现好的方面：</b>近7天新增 34 条，顾客认可酸汤开胃、豆米锅、时蔬新鲜、家庭聚会场景和服务态度；这些出品与服务优点要继续加强并争取更稳定。</p><p><b>需要改正的方面：</b>本周有 2 条3.5分及以下需改进项（实话不好吃 128 团购 比较失望、很久没来吃了，现在购买套餐比团购餐多一位还要单独收餐位费，吃）；店长要复盘锅底口味、128团购出品、餐位费/扫码/付款确认流程，明确责任点并避免下次再出现同样问题。昨天新增 2 条，低于每天至少3条基数，也要加强评价管理。</p></div>
-      
-    <section class='block'><h3>3.5分及以下需改进明细</h3>
-      <div class='table-wrap'><table><thead><tr><th>时间/入口</th><th>评分/用户</th><th>评价内容</th><th>改进方向</th><th>商家回复</th></tr></thead><tbody>
-        <tr>
-          <td>2026-05-24 23:51<br><span>美团评价</span></td>
-          <td><b>1分</b><br><span>x笑容太野，y</span></td>
-          <td>实话不好吃 128 团购 比较失望</td>
-          <td>复盘128团购出品、锅底口味、食材搭配和上桌前检查；店长抽查当日锅底稳定性，避免再次出现“口味失望”。</td>
-          <td>很抱歉这次没有让您吃满意，也谢谢您直接提醒我们🙏。您提到128团购的口味体验“实话不好吃、比较失望”，我们会马上同步给江岸店店长，复盘锅底、食材搭配和出品稳定性。下次到店也欢迎直接联系店员或店长，我们现场协助把口味调整到更合适。</td>
-        </tr>
-        <tr>
-          <td>2026-05-18 21:29<br><span>点评评价</span></td>
-          <td><b>3.5分</b><br><span>匿名用户</span></td>
-          <td>很久没来吃了，现在购买套餐比团购餐多一位还要单独收餐位费，吃了这么多店还没遇到过这种，直接买套餐验卷不好吗？非要扫桌上的二维码，服务员小妹帮忙点点点，吃完走，尽然说我没付款</td>
-          <td>复盘餐位费说明、扫码点单协助、套餐核销和离店付款确认流程；统一前厅话术，避免顾客被反复确认或误解为未付款。</td>
-          <td>亲爱的顾客，您好！感谢您选择黔山苗岭贵州豆米火锅，并分享您的用餐体验。关于您提到的餐位费问题，我们确实有相关说明，但很抱歉给您带来了困扰。我们会进一步优化服务流程，确保每位顾客都能有更好的体验。希望您能再次光临，给我们一个改进的机会。祝您生活愉快！🌹</td>
-        </tr></tbody></table></div>
-    </section>
-      <section class='block'><h3>近7天代表评价</h3><ul class='recent'><li><b>1分</b> 2026-05-24 23:51 美团评价：实话不好吃 128 团购 比较失望</li><li><b>5分</b> 2026-05-24 18:31 美团评价：还可以哦，环境还行，家庭聚会还是很棒</li><li><b>4.5分</b> 2026-05-23 16:57 点评评价：「手工棒棒面」「包浆小豆腐」「包浆小豆腐」很好吃，外面酥脆，里面嫩嫩的。推荐。其他，一般。</li><li><b>5分</b> 2026-05-23 11:53 点评评价：团购的双人餐性价比真的绝了，价格亲民特别划算，两个人吃得饱饱的完全不浪费。 黔山苗岭风味豆米火锅，锅底熬得浓稠鲜香，豆子炖得软烂，配菜自助，选择性大，分量实在，食材新鲜地道，涮完裹着汤汁吃口感超棒。</li><li><b>5分</b> 2026-05-23 07:26 点评评价：第二次去吃它家了，味道、食材、坏境整体都还不错</li><li><b>5分</b> 2026-05-22 19:00 点评评价：性价比：很高 口味：不错不错，喜欢吃贵州酸汤 环境：很好</li></ul></section>
-    </section><footer>本看板仅用于门店评价复盘；已按“3.5分及以下且内容确有不满”筛选改进项。</footer></main></body></html>
+<body>
+  <header>
+    <h1>L3 江岸店评价日报</h1>
+    <p>生成时间：2026-05-26 08:20 · 日报统计日期：2026-05-25</p>
+    
+  </header>
+  <main>
+      <section id="L3" class="store-section">
+        <div class="section-title">
+          <div><p>L3</p><h2>江岸店</h2></div>
+        </div>
+        <div class="metrics">
+          <div class='metric'><span>昨日新增</span><strong>7</strong><small>2026-05-25</small></div>
+          <div class='metric'><span>平均评分</span><strong>4.93</strong><small>昨日</small></div>
+          <div class='metric'><span>3.5分及以下</span><strong>0</strong><small>含正向低分</small></div>
+          <div class='metric'><span>需改进项</span><strong>0</strong><small>真实负向</small></div>
+          <div class='metric'><span>7条目标</span><strong>达标</strong><small>每日评价</small></div>
+          <div class='metric'><span>当前未回复</span><strong>0</strong><small>点评/美团复核</small></div>
+        </div>
+        <div class="split">
+          <div class="panel"><h3>表现好的方面</h3><ul class="advice"><li>非常棒！昨天没有差评，继续努力。 顾客认可锅底口味、食材新鲜、蔬菜补充、服务响应、环境卫生和套餐性价比。店长要继续把这些具体优点做稳，并争取更多顾客主动评价。</li></ul></div>
+          <div class="panel"><h3>需要改正的方面</h3><ul class="advice"><li>昨天新增 7 条，已达到本店每天 7 条评价目标；请继续稳定增加真实好评。 昨天没有需要单独列为改进项的差评；继续保持出品、服务和环境稳定，不要因为零差评放松现场巡查。</li></ul></div>
+        </div>
+        <div class="panel">
+          <h3>3.5分及以下需改进评价</h3>
+          <div class="review-grid compact"><p class='empty'>昨日无需要单独列为改进项的 3.5 分及以下评价。</p></div>
+        </div>
+        <details open>
+          <summary>昨日新增评价明细（7 条）</summary>
+          <div class="review-grid">
+      <article class="review normal">
+        <div class="review-head">
+          <div>
+            <strong>匿名用户</strong>
+            <small>2026-05-25 20:36 · 点评 · 黔山苗岭贵州豆米火锅（江岸天街店）</small>
+          </div>
+          <b>4.5 分</b>
+        </div>
+        <p>陪朋友在隔壁拍生日照片，一致选择贵州酸汤火锅，豆米汤底醇厚绵密，豆香浓郁越煮越鲜香。涮菜新鲜分量实在，特色配菜搭配汤底口感绝佳。
+店内环境带着苗家特色氛围感，店员服务热情周到，上菜速度也快。整体性价比很不错</p>
+        <div class="chips"><span>正向/正常</span></div>
+        <div class="meta">口味 4.5 · 环境 4.5 · 服务 4.5 · 已回复</div>
+      </article>
+    
+      <article class="review normal">
+        <div class="review-head">
+          <div>
+            <strong>西米腊馄饨</strong>
+            <small>2026-05-25 18:59 · 点评 · 黔山苗岭贵州豆米火锅（江岸天街店） 【苗乡特色】尝鲜双人餐贵州豆米火锅 ｜ 时蔬无限续 / ¥138.0 05月25日验证</small>
+          </div>
+          <b>5 分</b>
+        </div>
+        <p>环境幽雅整洁，酸汤开胃，小料齐全，主要是素菜还可以自助，真不错赞赞</p>
+        <div class="chips"><span>正向/正常</span></div>
+        <div class="meta">口味 5 · 环境 5 · 服务 5 · 已回复</div>
+      </article>
+    
+      <article class="review normal">
+        <div class="review-head">
+          <div>
+            <strong>小赛码AI科创学习中心南坪协信校区</strong>
+            <small>2026-05-25 18:39 · 点评 · 黔山苗岭贵州豆米火锅（江岸天街店）</small>
+          </div>
+          <b>5 分</b>
+        </div>
+        <p>环境很好味道也很不错推荐推荐值得下次再来菜品丰富锅底有多选择</p>
+        <div class="chips"><span>正向/正常</span></div>
+        <div class="meta">口味 5 · 环境 5 · 服务 5 · 已回复</div>
+      </article>
+    
+      <article class="review normal">
+        <div class="review-head">
+          <div>
+            <strong>朱朱果泡</strong>
+            <small>2026-05-25 13:29 · 点评 · 黔山苗岭贵州豆米火锅（江岸天街店） 【苗乡特色】尝鲜双人餐贵州豆米火锅 ｜ 时蔬无限续 / ¥138.0 05月16日验证</small>
+          </div>
+          <b>5 分</b>
+        </div>
+        <p>必须给五星的一个店，性价比不要太高，两个女生吃双人餐吃不完，自助的野菜好新鲜品类也好多，真的不要太爱。味道也很好，那个豆子好好吃，吃可以无限加，好开心
+肉也很新鲜，总之完全不踩雷，喜欢吃酸汤的朋友都可以去试试</p>
+        <div class="chips"><span>正向/正常</span></div>
+        <div class="meta">口味 5 · 环境 5 · 服务 5 · 已回复</div>
+      </article>
+    
+      <article class="review normal">
+        <div class="review-head">
+          <div>
+            <strong>洋葱炒菠萝</strong>
+            <small>2026-05-25 12:46 · 点评 · 黔山苗岭贵州豆米火锅（江岸天街店） 【甜蜜告白】野奢双人餐贵州豆米火锅 ｜ 非遗锅底 / ¥168.0 05月25日验证</small>
+          </div>
+          <b>5 分</b>
+        </div>
+        <p>口味：非常不错很好吃推荐吊龙
+ 服务：热情贴心周到
+ 性价比：很划算</p>
+        <div class="chips"><span>正向/正常</span></div>
+        <div class="meta">口味 5 · 环境 5 · 服务 5 · 已回复</div>
+      </article>
+    
+      <article class="review normal">
+        <div class="review-head">
+          <div>
+            <strong>昵称</strong>
+            <small>2026-05-25 12:32 · 点评 · 黔山苗岭贵州豆米火锅（江岸天街店）</small>
+          </div>
+          <b>5 分</b>
+        </div>
+        <p>很好，经常来吃，
+ 口味：「苗家红酸汤豆米锅底」锅底好
+ 环境：很好，可以
+ 服务：挺好的
+ 性价比：团购的，很好</p>
+        <div class="chips"><span>正向/正常</span></div>
+        <div class="meta">口味 5 · 环境 5 · 服务 5 · 已回复</div>
+      </article>
+    
+      <article class="review normal">
+        <div class="review-head">
+          <div>
+            <strong>温柔出色咕噜鱼</strong>
+            <small>2026-05-25 12:24 · 点评 · 黔山苗岭贵州豆米火锅（江岸天街店）</small>
+          </div>
+          <b>5 分</b>
+        </div>
+        <p>环境很好绿植看起来赏心悦目，菜品丰富锅底有多种选择，服务也很好值得下次再来</p>
+        <div class="chips"><span>正向/正常</span></div>
+        <div class="meta">口味 5 · 环境 5 · 服务 5 · 已回复</div>
+      </article>
+    </div>
+        </details>
+      </section>
+    </main>
+</body>
+</html>

@@ -1,26 +1,94 @@
 <!doctype html>
-<html lang='zh-CN'>
+<html lang="zh-CN">
 <head>
-<meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'>
-<title>L1 光环店评价周报</title>
-<style>
-:root{--bg:#f7f8fa;--ink:#1f2933;--muted:#687386;--line:#d9dee7;--panel:#fff;--green:#157347;--amber:#9a6700;--red:#b42318;--blue:#1d4f91;}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.55 -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;letter-spacing:0}a{color:var(--blue);text-decoration:none}.wrap{max-width:1180px;margin:0 auto;padding:24px}header{padding:26px 0 18px;border-bottom:1px solid var(--line);margin-bottom:18px}header p{margin:0 0 6px;color:var(--muted)}h1{margin:0;font-size:30px;line-height:1.2}nav{display:flex;gap:10px;flex-wrap:wrap;margin:16px 0}nav a,.store-head a{border:1px solid var(--line);background:#fff;padding:7px 10px;border-radius:6px}.overview,.metrics{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:10px;margin:14px 0}.metric{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:12px;min-height:86px}.metric span,.metric small{display:block;color:var(--muted)}.metric strong{display:block;font-size:28px;line-height:1.2;margin:4px 0}.notice,.advice,.block{background:#fff;border:1px solid var(--line);border-radius:8px;padding:14px 16px;margin:12px 0}.notice{border-left:4px solid var(--blue)}.store{margin:24px 0 32px}.store-head{display:flex;align-items:end;justify-content:space-between;gap:16px;margin:0 0 8px}.store-head p{margin:0;color:var(--muted)}h2{font-size:22px;margin:0}h3{font-size:16px;margin:0 0 10px}.advice p{margin:6px 0}.table-wrap{overflow-x:auto}table{border-collapse:collapse;width:100%;background:#fff}th,td{border-top:1px solid var(--line);padding:10px;text-align:left;vertical-align:top}th{color:#354052;background:#f0f3f7}td span,td em{color:var(--muted);font-style:normal}.empty{color:var(--muted);margin:0}.recent{margin:0;padding-left:20px}.recent li{margin:6px 0}.tag-good{color:var(--green)}.tag-warn{color:var(--amber)}.tag-bad{color:var(--red)}footer{color:var(--muted);border-top:1px solid var(--line);padding:16px 0;margin-top:20px}@media(max-width:900px){.overview,.metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.store-head{display:block}h1{font-size:24px}.wrap{padding:16px}}@media(max-width:520px){.overview,.metrics{grid-template-columns:1fr}}
-</style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>L1 光环店评价日报</title>
+  <style>
+    :root { --ink:#172033; --muted:#667085; --line:#d8dee8; --bg:#f6f7f9; --panel:#fff; --green:#18794e; --gold:#b7791f; --soft:#eef3f7; }
+    * { box-sizing:border-box; }
+    body { margin:0; background:var(--bg); color:var(--ink); font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif; }
+    header { padding:28px 36px 20px; background:#fff; border-bottom:1px solid var(--line); }
+    header h1 { margin:0 0 8px; font-size:28px; letter-spacing:0; }
+    header p { margin:0; color:var(--muted); }
+    nav { display:flex; gap:10px; margin-top:16px; flex-wrap:wrap; }
+    nav a { color:var(--ink); text-decoration:none; border:1px solid var(--line); background:var(--soft); border-radius:6px; padding:8px 12px; font-size:14px; }
+    main { padding:24px 36px 48px; max-width:1360px; margin:auto; }
+    .overview, .metrics, .split { display:grid; gap:14px; }
+    .overview, .metrics { grid-template-columns:repeat(5,minmax(130px,1fr)); margin:14px 0; }
+    .metric { background:var(--panel); border:1px solid var(--line); border-radius:8px; padding:14px; min-height:92px; }
+    .metric span { display:block; color:var(--muted); font-size:13px; }
+    .metric strong { display:block; font-size:30px; margin:8px 0 4px; letter-spacing:0; }
+    .metric small { color:var(--muted); }
+    .notice { border-left:4px solid var(--gold); background:#fff9df; padding:12px 14px; margin:14px 0; }
+    .store-section { margin-top:26px; }
+    .section-title p { margin:0 0 2px; color:#315f95; font-weight:700; }
+    .section-title h2 { margin:0; font-size:24px; }
+    .split { grid-template-columns:1fr 1fr; }
+    .panel, details { background:var(--panel); border:1px solid var(--line); border-radius:8px; padding:16px; margin-top:14px; }
+    .panel h3 { margin:0 0 12px; font-size:17px; }
+    .advice { margin:0; padding-left:20px; line-height:1.75; }
+    summary { cursor:pointer; font-weight:700; }
+    .review-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; margin-top:14px; }
+    .review-grid.compact { grid-template-columns:1fr; }
+    .review { border:1px solid var(--line); border-radius:8px; padding:14px; background:#fff; }
+    .review.watch { border-color:#e4b15a; background:#fffaf1; }
+    .review-head { display:flex; justify-content:space-between; gap:12px; align-items:flex-start; }
+    .review-head small { display:block; color:var(--muted); margin-top:3px; line-height:1.4; }
+    .review-head b { color:var(--green); white-space:nowrap; }
+    .review.watch .review-head b { color:#9f5800; }
+    .review p { margin:12px 0; line-height:1.65; white-space:pre-wrap; }
+    .chips { display:flex; flex-wrap:wrap; gap:8px; }
+    .chips span { border:1px solid var(--line); border-radius:999px; padding:4px 8px; background:#fbfcfd; color:#344056; font-size:12px; }
+    .meta, .empty { color:var(--muted); font-size:12px; margin-top:10px; }
+    @media (max-width: 900px) { header, main { padding-left:18px; padding-right:18px; } .overview, .metrics, .split, .review-grid { grid-template-columns:1fr; } }
+  </style>
 </head>
-<body><main class='wrap'><header><p>生成时间：2026-05-25 08:31 ｜ 统计范围：2026-05-18 至 2026-05-24</p><h1>L1 光环店评价周报</h1></header>
-    <section id='L1' class='store'>
-      <div class='store-head'><div><p>L1 光环店</p><h2>黔山苗岭贵州豆米火锅（光环店）</h2></div><a href='guanghuan.html'>单店看板</a></div>
-      <div class='metrics'>
-        <div class='metric'><span>近7天新增</span><strong>4</strong><small>5/18-5/24</small></div>
-        <div class='metric'><span>昨日新增</span><strong>0</strong><small>5/24</small></div>
-        <div class='metric'><span>平均评分</span><strong>4.75</strong><small>近7天</small></div>
-        <div class='metric'><span>需改进项</span><strong>0</strong><small>3.5分及以下真实负向</small></div>
-        <div class='metric'><span>本次回复</span><strong>0</strong><small>未回复已处理</small></div>
-        <div class='metric'><span>当前未回复</span><strong>0</strong><small>全部时间复核</small></div>
-      </div>
-      <div class='advice'><p><b>昨日状态：</b>昨天没有新增评价。 昨天新增 0 条，低于每天至少3条基数；必须加强评价管理，每天需要增加3条以上。</p><p><b>表现好的方面：</b>近7天新增 4 条，顾客认可豆米火锅、自助蔬菜、环境和性价比；昨日状态：非常棒！昨天没有差评，继续努力。</p><p><b>需要改正的方面：</b>昨天没有新增评价，低于每天至少3条真实好评/新增评价基数；店长今天要加强评价管理和到店顾客评价引导，每天需要增加3条以上。</p></div>
-      <section class='block'><h3>3.5分及以下需改进明细</h3><p class='empty'>本周期没有需要列为改进项的3.5分及以下评价。</p></section>
-      <section class='block'><h3>近7天代表评价</h3><ul class='recent'><li><b>4.5分</b> 2026-05-21 22:21 点评评价：豆米火锅最最最喜欢的的点是什么？蔬菜蔬菜，蔬菜+肉肉+蔬菜，就是那种放开吃，又很好吃，又放开吃的感觉。第一次吃是去贵州，后来过年旅游到泸州也吃，再后来在重庆又吃，这个味道很适合喜欢鲜汤风味的同学，特别适合双人情侣吃。。。。因为吃完了可以相互</li><li><b>5分</b> 2026-05-20 19:20 点评评价：吃过之后，感觉酸汤挺开胃的，味道刚刚好。牛肉片处理得很嫩，很容易熟。吃完之后还挺舒服的，有一种温暖的感觉。 Note: The answer is designed to closely match the given instructio</li><li><b>4.5分</b> 2026-05-18 20:53 点评评价：店铺就在家楼下，环境特别卫生干净整洁，菜品也很新鲜，味道巴适，强烈推荐。</li><li><b>5分</b> 2026-05-18 00:11 点评评价：不晓得什么时候突然刮起了豆米火锅的风 就来吃一下啦 口味：「贵州红酸汤锅底」锅的味道还可以，不错 环境：环境一般般吃饭吧 服务：可以有很多自助的菜 性价比：整体吃下来，性价比还是不错的，蔬菜自由 可以再来吃</li></ul></section>
-    </section><footer>本看板仅用于门店评价复盘；已按“3.5分及以下且内容确有不满”筛选改进项。</footer></main></body></html>
+<body>
+  <header>
+    <h1>L1 光环店评价日报</h1>
+    <p>生成时间：2026-05-26 08:20 · 日报统计日期：2026-05-25</p>
+    
+  </header>
+  <main>
+      <section id="L1" class="store-section">
+        <div class="section-title">
+          <div><p>L1</p><h2>光环店</h2></div>
+        </div>
+        <div class="metrics">
+          <div class='metric'><span>昨日新增</span><strong>1</strong><small>2026-05-25</small></div>
+          <div class='metric'><span>平均评分</span><strong>5</strong><small>昨日</small></div>
+          <div class='metric'><span>3.5分及以下</span><strong>0</strong><small>含正向低分</small></div>
+          <div class='metric'><span>需改进项</span><strong>0</strong><small>真实负向</small></div>
+          <div class='metric'><span>3条目标</span><strong>未达标</strong><small>每日评价</small></div>
+          <div class='metric'><span>当前未回复</span><strong>0</strong><small>点评/美团复核</small></div>
+        </div>
+        <div class="split">
+          <div class="panel"><h3>表现好的方面</h3><ul class="advice"><li>非常棒！昨天没有差评，继续努力。 顾客认可锅底口味。店长要继续把这些具体优点做稳，并争取更多顾客主动评价。</li></ul></div>
+          <div class="panel"><h3>需要改正的方面</h3><ul class="advice"><li>昨天新增 1 条，低于本店每天 3 条评价目标；请加强评价管理，每天需要达到 3 条以上。 昨天没有需要单独列为改进项的差评，但评价量未达标；店长要明确班次责任，确保每天新增 3 条以上。</li></ul></div>
+        </div>
+        <div class="panel">
+          <h3>3.5分及以下需改进评价</h3>
+          <div class="review-grid compact"><p class='empty'>昨日无需要单独列为改进项的 3.5 分及以下评价。</p></div>
+        </div>
+        <details open>
+          <summary>昨日新增评价明细（1 条）</summary>
+          <div class="review-grid">
+      <article class="review normal">
+        <div class="review-head">
+          <div>
+            <strong>匿名用户</strong>
+            <small>2026-05-25 16:19 · 美团 · 黔山苗岭贵州豆米火锅（光环店） 【浪漫时光】精致双人餐 / ¥168.0</small>
+          </div>
+          <b>5 分</b>
+        </div>
+        <p>这家的酸汤锅味道非常正宗，酸辣适中，汤底特别浓郁，吃得很满足。锅底很有层次感，辣得过瘾，非常推荐！(っ´▽｀)っ🍲</p>
+        <div class="chips"><span>正向/正常</span></div>
+        <div class="meta">口味 5 · 环境 5 · 服务 5 · 已回复</div>
+      </article>
+    </div>
+        </details>
+      </section>
+    </main>
+</body>
+</html>
