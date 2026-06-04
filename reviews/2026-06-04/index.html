@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>三店评价日报</title>
+  <style>
+    :root { --ink:#172033; --muted:#667085; --line:#d8dee8; --bg:#f6f7f9; --panel:#fff; --green:#18794e; --gold:#b7791f; --soft:#eef3f7; }
+    * { box-sizing:border-box; }
+    body { margin:0; background:var(--bg); color:var(--ink); font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif; }
+    header { padding:28px 36px 20px; background:#fff; border-bottom:1px solid var(--line); }
+    header h1 { margin:0 0 8px; font-size:28px; letter-spacing:0; }
+    header p { margin:0; color:var(--muted); }
+    nav { display:flex; gap:10px; margin-top:16px; flex-wrap:wrap; }
+    nav a { color:var(--ink); text-decoration:none; border:1px solid var(--line); background:var(--soft); border-radius:6px; padding:8px 12px; font-size:14px; }
+    main { padding:24px 36px 48px; max-width:1360px; margin:auto; }
+    .overview, .metrics, .split { display:grid; gap:14px; }
+    .overview, .metrics { grid-template-columns:repeat(5,minmax(130px,1fr)); margin:14px 0; }
+    .metric { background:var(--panel); border:1px solid var(--line); border-radius:8px; padding:14px; min-height:92px; }
+    .metric span { display:block; color:var(--muted); font-size:13px; }
+    .metric strong { display:block; font-size:30px; margin:8px 0 4px; letter-spacing:0; }
+    .metric small { color:var(--muted); }
+    .notice { border-left:4px solid var(--gold); background:#fff9df; padding:12px 14px; margin:14px 0; }
+    .store-section { margin-top:26px; }
+    .section-title p { margin:0 0 2px; color:#315f95; font-weight:700; }
+    .section-title h2 { margin:0; font-size:24px; }
+    .split { grid-template-columns:1fr 1fr; }
+    .panel, details { background:var(--panel); border:1px solid var(--line); border-radius:8px; padding:16px; margin-top:14px; }
+    .panel h3 { margin:0 0 12px; font-size:17px; }
+    .advice { margin:0; padding-left:20px; line-height:1.75; }
+    summary { cursor:pointer; font-weight:700; }
+    .review-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; margin-top:14px; }
+    .review-grid.compact { grid-template-columns:1fr; }
+    .review { border:1px solid var(--line); border-radius:8px; padding:14px; background:#fff; }
+    .review.watch { border-color:#e4b15a; background:#fffaf1; }
+    .review-head { display:flex; justify-content:space-between; gap:12px; align-items:flex-start; }
+    .review-head small { display:block; color:var(--muted); margin-top:3px; line-height:1.4; }
+    .review-head b { color:var(--green); white-space:nowrap; }
+    .review.watch .review-head b { color:#9f5800; }
+    .review p { margin:12px 0; line-height:1.65; white-space:pre-wrap; }
+    .chips { display:flex; flex-wrap:wrap; gap:8px; }
+    .chips span { border:1px solid var(--line); border-radius:999px; padding:4px 8px; background:#fbfcfd; color:#344056; font-size:12px; }
+    .meta, .empty { color:var(--muted); font-size:12px; margin-top:10px; }
+    @media (max-width: 900px) { header, main { padding-left:18px; padding-right:18px; } .overview, .metrics, .split, .review-grid { grid-template-columns:1fr; } }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>三店评价日报</h1>
+    <p>生成时间：2026-06-04 08:08 · 日报统计日期：2026-06-03</p>
+    <nav><a href='#L1'>L1 光环店</a><a href='#L2'>L2 星汇店</a><a href='#L3'>L3 江岸店</a></nav>
+  </header>
+  <main>
+      <div class="overview">
+        <div class='metric'><span>昨日新增</span><strong>7</strong><small>2026-06-03</small></div>
+        <div class='metric'><span>平均评分</span><strong>4.5</strong><small>三店合计</small></div>
+        <div class='metric'><span>3.5分及以下</span><strong>2</strong><small>含正向低分</small></div>
+        <div class='metric'><span>需改进项</span><strong>1</strong><small>只含真实负向</small></div>
+        <div class='metric'><span>当前未回复</span><strong>0</strong><small>点评/美团复核</small></div>
+      </div>
+      <div class="notice">本次为日报：只分析 2026-06-03 新增评价，不发送周报，也不单独发送风险提醒。每日评价目标：L1 光环店 3 条，L2 星汇店 7 条，L3 江岸店 7 条。</div>
+    
+      <section id="L1" class="store-section">
+        <div class="section-title">
+          <div><p>L1</p><h2>光环店</h2></div>
+        </div>
+        <div class="metrics">
+          <div class='metric'><span>昨日新增</span><strong>1</strong><small>2026-06-03</small></div>
+          <div class='metric'><span>目标完成率</span><strong>33%</strong><small>目标 3 条</small></div>
+          <div class='metric'><span>平均评分</span><strong>5</strong><small>昨日</small></div>
+          <div class='metric'><span>3条目标</span><strong>未达标</strong><small>每日评价</small></div>
+          <div class='metric'><span>当前未回复</span><strong>0</strong><small>点评/美团复核</small></div>
+          <div class='metric'><span>3.5分及以下</span><strong>0</strong><small>含正向低分</small></div>
+          <div class='metric'><span>需复盘项</span><strong>0</strong><small>真实负向</small></div>
+        </div>
+        <div class="split">
+          <div class="panel"><h3>好评增长与表现</h3><ul class="advice"><li>评价目标：昨天新增 1 条，目标 3 条，完成率 33%，低于 60%。店长今天要自纠自查评价管理、餐后邀评和现场体验，查出问题后第二天必须改进。 顾客认可锅底口味、服务响应、环境卫生和套餐性价比。店长要继续把这些具体优点做稳，并争取更多顾客主动评价。</li></ul></div>
+          <div class="panel"><h3>评价目标与自查动作</h3><ul class="advice"><li>评价量低于目标 60%；店长必须自纠自查，找出评价少的原因，第二天按问题改进。 重点检查顾客离店提醒、服务补位、菜品出品和现场负责人跟进是否到位。</li></ul></div>
+        </div>
+        <details open>
+          <summary>昨日新增评价明细（1 条）</summary>
+          <div class="review-grid">
+      <article class="review normal">
+        <div class="review-head">
+          <div>
+            <strong>青藏土特产_530</strong>
+            <small>2026-06-03 13:02 · 点评 · 黔山苗岭贵州豆米火锅（光环店） 【双喜临门】贵州酸汤牛肉双人餐 / ¥126.8 05月17日验证 / 【双喜临门】贵州酸汤牛肉双人餐</small>
+          </div>
+          <b>5 分</b>
+        </div>
+        <p>&lt;img src=&quot;https://p0.meituan.net/travelcube/748bbb6ce93b3410b9f55664da682f143898.png&quot; style=&quot;height: 1.2rem; width: 1.2rem; vertical-align: middle; margin: 0 2px;&quot; /&gt;口味：「贵州红酸汤锅底」 &lt;img src=&quot;https://p1.meituan.net/travelcube/cc64ecd71718ec343b9297244cb04e0c3029.png&quot; style=&quot;height: 1.2rem; width: 1.2rem; vertical-align: middle; margin: 0 2px;&quot; /&gt;环境：休闲 &lt;img src=&quot;https://p0.meituan.net/travelcube/e2b87d089b7c1a1f1ee3f0ac2937548f2486.png&quot; style=&quot;height: 1.2rem; width: 1.2rem; vertical-align: middle; margin: 0 2px;&quot; /&gt;服务：很棒 &lt;img src=&quot;https://p0.meituan.net/travelcube/34a3bdee790f543e8f54f0c36b2c04294349.png&quot; style=&quot;height: 1.2rem; width: 1.2rem; vertical-align: middle; margin: 0 2px;&quot; /&gt;性价比：超赞</p>
+        <div class="chips"><span>正向/正常</span></div>
+        <div class="meta">口味 5 · 环境 5 · 服务 5 · 已回复</div>
+      </article>
+    </div>
+        </details>
+        <div class="panel">
+          <h3>最后：3.5分及以下需复盘内容</h3>
+          <div class="review-grid compact"><p class='empty'>非常棒！昨天没有差评，继续努力。昨日无需要单独列为改进项的 3.5 分及以下评价。</p></div>
+        </div>
+      </section>
+    
+
+      <section id="L2" class="store-section">
+        <div class="section-title">
+          <div><p>L2</p><h2>星汇店</h2></div>
+        </div>
+        <div class="metrics">
+          <div class='metric'><span>昨日新增</span><strong>3</strong><small>2026-06-03</small></div>
+          <div class='metric'><span>目标完成率</span><strong>43%</strong><small>目标 7 条</small></div>
+          <div class='metric'><span>平均评分</span><strong>5</strong><small>昨日</small></div>
+          <div class='metric'><span>7条目标</span><strong>未达标</strong><small>每日评价</small></div>
+          <div class='metric'><span>当前未回复</span><strong>0</strong><small>点评/美团复核</small></div>
+          <div class='metric'><span>3.5分及以下</span><strong>0</strong><small>含正向低分</small></div>
+          <div class='metric'><span>需复盘项</span><strong>0</strong><small>真实负向</small></div>
+        </div>
+        <div class="split">
+          <div class="panel"><h3>好评增长与表现</h3><ul class="advice"><li>评价目标：昨天新增 3 条，目标 7 条，完成率 43%，低于 60%。店长今天要自纠自查评价管理、餐后邀评和现场体验，查出问题后第二天必须改进。 顾客认可锅底口味、食材新鲜、蔬菜补充、服务响应和环境卫生。店长要继续把这些具体优点做稳，并争取更多顾客主动评价。</li></ul></div>
+          <div class="panel"><h3>评价目标与自查动作</h3><ul class="advice"><li>评价量低于目标 60%；店长必须自纠自查，找出评价少的原因，第二天按问题改进。 重点检查顾客离店提醒、服务补位、菜品出品和现场负责人跟进是否到位。</li></ul></div>
+        </div>
+        <details open>
+          <summary>昨日新增评价明细（3 条）</summary>
+          <div class="review-grid">
+      <article class="review normal">
+        <div class="review-head">
+          <div>
+            <strong>RLf633970319</strong>
+            <small>2026-06-03 19:37 · 美团 · 黔山苗岭贵州豆米火锅（龙湖星汇天街店）</small>
+          </div>
+          <b>5 分</b>
+        </div>
+        <p>环境优美 菜品新鲜 服务周到 味道好吃</p>
+        <div class="chips"><span>正向/正常</span></div>
+        <div class="meta">口味 5 · 环境 5 · 服务 5 · 已回复</div>
+      </article>
+    
+      <article class="review normal">
+        <div class="review-head">
+          <div>
+            <strong>匿名用户</strong>
+            <small>2026-06-03 12:20 · 美团 · 黔山苗岭贵州豆米火锅（龙湖星汇天街店）</small>
+          </div>
+          <b>5 分</b>
+        </div>
+        <p>锅底很好吃，加上调料里的糊辣椒更美味了，他们家蔬菜水果呀也都很新鲜，环境也特别的干净，还能边吃边听音乐很有氛围感！！</p>
+        <div class="chips"><span>正向/正常</span></div>
+        <div class="meta">口味 5 · 环境 5 · 服务 5 · 已回复</div>
+      </article>
+    
+      <article class="review normal">
+        <div class="review-head">
+          <div>
+            <strong>dpuser_3946855128</strong>
+            <small>2026-06-03 18:54 · 点评 · 黔山苗岭贵州豆米火锅（龙湖星汇天街店）</small>
+          </div>
+          <b>5 分</b>
+        </div>
+        <p>这里的菜好新鲜，服务十分周到，五星推荐！</p>
+        <div class="chips"><span>正向/正常</span></div>
+        <div class="meta">口味 5 · 环境 5 · 服务 5 · 已回复</div>
+      </article>
+    </div>
+        </details>
+        <div class="panel">
+          <h3>最后：3.5分及以下需复盘内容</h3>
+          <div class="review-grid compact"><p class='empty'>非常棒！昨天没有差评，继续努力。昨日无需要单独列为改进项的 3.5 分及以下评价。</p></div>
+        </div>
+      </section>
+    
+
+      <section id="L3" class="store-section">
+        <div class="section-title">
+          <div><p>L3</p><h2>江岸店</h2></div>
+        </div>
+        <div class="metrics">
+          <div class='metric'><span>昨日新增</span><strong>3</strong><small>2026-06-03</small></div>
+          <div class='metric'><span>目标完成率</span><strong>43%</strong><small>目标 7 条</small></div>
+          <div class='metric'><span>平均评分</span><strong>3.83</strong><small>昨日</small></div>
+          <div class='metric'><span>7条目标</span><strong>未达标</strong><small>每日评价</small></div>
+          <div class='metric'><span>当前未回复</span><strong>0</strong><small>点评/美团复核</small></div>
+          <div class='metric'><span>3.5分及以下</span><strong>2</strong><small>含正向低分</small></div>
+          <div class='metric'><span>需复盘项</span><strong>1</strong><small>真实负向</small></div>
+        </div>
+        <div class="split">
+          <div class="panel"><h3>好评增长与表现</h3><ul class="advice"><li>评价目标：昨天新增 3 条，目标 7 条，完成率 43%，低于 60%。店长今天要自纠自查评价管理、餐后邀评和现场体验，查出问题后第二天必须改进。 顾客认可食材新鲜、蔬菜补充、服务响应、环境卫生和套餐性价比。店长要继续把这些具体优点做稳，并争取更多顾客主动评价。</li></ul></div>
+          <div class="panel"><h3>评价目标与自查动作</h3><ul class="advice"><li>评价量低于目标 60%；店长必须自纠自查，找出评价少的原因，第二天按问题改进。 有需复盘的低分内容，明细已放在本店看板最后；店长要按最后一栏逐条闭环。</li></ul></div>
+        </div>
+        <details open>
+          <summary>昨日新增评价明细（3 条）</summary>
+          <div class="review-grid">
+      <article class="review normal">
+        <div class="review-head">
+          <div>
+            <strong>汶汶612</strong>
+            <small>2026-06-03 18:25 · 点评 · 黔山苗岭贵州豆米火锅（江岸天街店）</small>
+          </div>
+          <b>3.5 分</b>
+        </div>
+        <p>这家的环境还不错，吃野菜的话很合适，感觉就是很养生。</p>
+        <div class="chips"><span>正向/正常</span></div>
+        <div class="meta">口味 4 · 环境 4 · 服务 4 · 已回复</div>
+      </article>
+    
+      <article class="review normal">
+        <div class="review-head">
+          <div>
+            <strong>在骑楼老街爬山的甜椒</strong>
+            <small>2026-06-03 12:00 · 点评 · 黔山苗岭贵州豆米火锅（江岸天街店）</small>
+          </div>
+          <b>5 分</b>
+        </div>
+        <p>团的套餐很划算里面的菜品也是我们喜欢吃的菜很多蔬菜自助的有意向的冲冲冲</p>
+        <div class="chips"><span>正向/正常</span></div>
+        <div class="meta">口味 5 · 环境 5 · 服务 5 · 已回复</div>
+      </article>
+    
+      <article class="review watch">
+        <div class="review-head">
+          <div>
+            <strong>匿名用户</strong>
+            <small>2026-06-03 10:00 · 点评 · 黔山苗岭贵州豆米火锅（江岸天街店）</small>
+          </div>
+          <b>3 分</b>
+        </div>
+        <p>服务可以 但是应该不干净 今天疯狂拉肚子 无语死了</p>
+        <div class="chips"><span>需改进</span></div>
+        <div class="meta">口味 2.5 · 环境 4.5 · 服务 4.5 · 已回复</div>
+      </article>
+    </div>
+        </details>
+        <div class="panel">
+          <h3>最后：3.5分及以下需复盘内容</h3>
+          <div class="review-grid compact">
+      <article class="review watch">
+        <div class="review-head">
+          <div>
+            <strong>匿名用户</strong>
+            <small>2026-06-03 10:00 · 点评 · 黔山苗岭贵州豆米火锅（江岸天街店）</small>
+          </div>
+          <b>3 分</b>
+        </div>
+        <p>服务可以 但是应该不干净 今天疯狂拉肚子 无语死了</p>
+        <div class="chips"><span>需改进</span></div>
+        <div class="meta">口味 2.5 · 环境 4.5 · 服务 4.5 · 已回复</div>
+      </article>
+    </div>
+        </div>
+      </section>
+    </main>
+</body>
+</html>
