@@ -3,79 +3,276 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>L1 光环店评价日报</title>
+  <title>L1 光环店评价月报</title>
   <style>
-    :root { --ink:#172033; --muted:#667085; --line:#d8dee8; --bg:#f6f7f9; --panel:#fff; --green:#18794e; --gold:#b7791f; --soft:#eef3f7; }
+    :root { --ink:#1c2430; --muted:#697386; --line:#d8dee8; --bg:#f5f6f8; --panel:#fff; --green:#147858; --gold:#c88900; --red:#b42318; --blue:#305c8d; }
     * { box-sizing:border-box; }
-    body { margin:0; background:var(--bg); color:var(--ink); font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif; }
-    header { padding:28px 36px 20px; background:#fff; border-bottom:1px solid var(--line); }
-    header h1 { margin:0 0 8px; font-size:28px; letter-spacing:0; }
+    body { margin:0; background:var(--bg); color:var(--ink); font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,"PingFang SC","Microsoft YaHei",sans-serif; }
+    header { padding:26px 34px 18px; background:#fff; border-bottom:1px solid var(--line); position:sticky; top:0; z-index:2; }
+    h1 { margin:0 0 8px; font-size:28px; letter-spacing:0; }
     header p { margin:0; color:var(--muted); }
-    nav { display:flex; gap:10px; margin-top:16px; flex-wrap:wrap; }
-    nav a { color:var(--ink); text-decoration:none; border:1px solid var(--line); background:var(--soft); border-radius:6px; padding:8px 12px; font-size:14px; }
-    main { padding:24px 36px 48px; max-width:1360px; margin:auto; }
-    .overview, .metrics, .split { display:grid; gap:14px; }
-    .overview, .metrics { grid-template-columns:repeat(5,minmax(130px,1fr)); margin:14px 0; }
-    .metric { background:var(--panel); border:1px solid var(--line); border-radius:8px; padding:14px; min-height:92px; }
+    nav { display:flex; gap:10px; flex-wrap:wrap; margin-top:16px; }
+    nav a { text-decoration:none; color:var(--ink); border:1px solid var(--line); background:#eef3f7; border-radius:6px; padding:8px 12px; }
+    main { max-width:1440px; margin:auto; padding:24px 34px 48px; }
+    .overview,.metrics { display:grid; grid-template-columns:repeat(5,minmax(130px,1fr)); gap:14px; }
+    .metric,.panel,details { background:var(--panel); border:1px solid var(--line); border-radius:8px; padding:15px; }
     .metric span { display:block; color:var(--muted); font-size:13px; }
-    .metric strong { display:block; font-size:30px; margin:8px 0 4px; letter-spacing:0; }
-    .metric small { color:var(--muted); }
-    .notice { border-left:4px solid var(--gold); background:#fff9df; padding:12px 14px; margin:14px 0; }
+    .metric strong { display:block; font-size:28px; margin:8px 0 4px; letter-spacing:0; }
+    .metric small,.meta { color:var(--muted); font-size:12px; }
     .store-section { margin-top:26px; }
-    .section-title p { margin:0 0 2px; color:#315f95; font-weight:700; }
+    .section-title { display:flex; justify-content:space-between; align-items:end; gap:20px; margin:18px 0 12px; }
+    .section-title p { margin:0 0 2px; color:var(--blue); font-weight:700; }
     .section-title h2 { margin:0; font-size:24px; }
-    .split { grid-template-columns:1fr 1fr; }
-    .panel, details { background:var(--panel); border:1px solid var(--line); border-radius:8px; padding:16px; margin-top:14px; }
-    .panel h3 { margin:0 0 12px; font-size:17px; }
+    .split { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:14px; }
     .advice { margin:0; padding-left:20px; line-height:1.75; }
+    details { margin-top:14px; }
     summary { cursor:pointer; font-weight:700; }
     .review-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; margin-top:14px; }
-    .review-grid.compact { grid-template-columns:1fr; }
     .review { border:1px solid var(--line); border-radius:8px; padding:14px; background:#fff; }
-    .review.watch { border-color:#e4b15a; background:#fffaf1; }
+    .review.watch { border-color:#e2a545; background:#fff9ed; }
     .review-head { display:flex; justify-content:space-between; gap:12px; align-items:flex-start; }
-    .review-head small { display:block; color:var(--muted); margin-top:3px; line-height:1.4; }
+    .review-head small { display:block; color:var(--muted); margin-top:3px; }
     .review-head b { color:var(--green); white-space:nowrap; }
     .review.watch .review-head b { color:#9f5800; }
-    .review p { margin:12px 0; line-height:1.65; white-space:pre-wrap; }
-    .chips { display:flex; flex-wrap:wrap; gap:8px; }
-    .chips span { border:1px solid var(--line); border-radius:999px; padding:4px 8px; background:#fbfcfd; color:#344056; font-size:12px; }
-    .meta, .empty { color:var(--muted); font-size:12px; margin-top:10px; }
-    @media (max-width: 900px) { header, main { padding-left:18px; padding-right:18px; } .overview, .metrics, .split, .review-grid { grid-template-columns:1fr; } }
+    .review p { white-space:pre-wrap; line-height:1.65; margin:12px 0; }
+    .notice { border-left:4px solid var(--gold); background:#fff9df; padding:12px 14px; margin:14px 0; }
+    @media (max-width:900px) { header,main { padding-left:18px; padding-right:18px; } .overview,.metrics,.split,.review-grid { grid-template-columns:1fr; } .section-title { display:block; } }
   </style>
 </head>
 <body>
-  <header>
-    <h1>L1 光环店评价日报</h1>
-    <p>生成时间：2026-06-05 08:07 · 日报统计日期：2026-06-04</p>
-    
-  </header>
+  <header><h1>L1 光环店评价月报</h1><p>生成时间：2026-06-06 08:23 · 月报 2026-05-01 至 2026-05-31</p></header>
   <main>
       <section id="L1" class="store-section">
-        <div class="section-title">
-          <div><p>L1</p><h2>光环店</h2></div>
-        </div>
+        <div class="section-title"><div><p>L1</p><h2>光环店</h2></div></div>
         <div class="metrics">
-          <div class='metric'><span>昨日新增</span><strong>0</strong><small>2026-06-04</small></div>
-          <div class='metric'><span>目标完成率</span><strong>0%</strong><small>目标 3 条</small></div>
-          <div class='metric'><span>平均评分</span><strong>0</strong><small>昨日</small></div>
-          <div class='metric'><span>3条目标</span><strong>未达标</strong><small>每日评价</small></div>
+          <div class='metric'><span>5月新增</span><strong>22</strong><small>均分 4.41</small></div>
+          <div class='metric'><span>月目标</span><strong>93</strong><small>完成率 24%</small></div>
+          <div class='metric'><span>昨日新增</span><strong>0</strong><small>2026-05-31</small></div>
+          <div class='metric'><span>需改进项</span><strong>2</strong><small>3.5分及以下真实负向</small></div>
           <div class='metric'><span>当前未回复</span><strong>0</strong><small>点评/美团复核</small></div>
-          <div class='metric'><span>3.5分及以下</span><strong>0</strong><small>含正向低分</small></div>
-          <div class='metric'><span>需复盘项</span><strong>0</strong><small>真实负向</small></div>
         </div>
         <div class="split">
-          <div class="panel"><h3>好评增长与表现</h3><ul class="advice"><li>评价目标：昨天新增 0 条，目标 3 条，完成率 0%，低于 60%。店长今天要自纠自查评价管理、餐后邀评和现场体验，查出问题后第二天必须改进。 昨天没有新增评价，暂时没有新的顾客正向反馈；今天要把餐后邀评和真实好评沉淀补起来。</li></ul></div>
-          <div class="panel"><h3>评价目标与自查动作</h3><ul class="advice"><li>评价量低于目标 60%；店长必须自纠自查，找出评价少的原因，第二天按问题改进。 今天重点检查餐后邀评触点是否执行到人，避免真实好评继续断档。</li></ul></div>
+          <div class="panel"><h3>店长重点</h3><ul class="advice"><li>表现好的方面：5月新增 22 条，低于本店月目标 93 条；店长必须加强评价管理，每天需要达到 3 条以上。 顾客集中认可豆米锅底、酸汤锅底、自助蔬菜、环境、卫生、干净整洁。店长要继续把这些具体优点做稳，并争取更多顾客主动评价。 昨天没有新增评价。 非常棒！昨天没有差评，继续努力。</li><li>需要改正的方面：3.5分提到“&lt;img src=&quot;https://p0.meituan.net/travelcube/748bbb6ce93b3410b9f55664d…”；0.5分提到“服务员态度极其敷衍，极其不耐烦，随便问个什么都爱答不理的。让加汤也一直不加，不知道在装什么。狠狠避雷这家店吧”。店长要逐条复盘责任点，明确班次改进动作，避免同类问题再次出现。</li></ul></div>
+          <div class="panel"><h3>执行情况</h3><p>本次已回复 1 条未回复评价；昨日没有新增评价；非常棒！昨天没有差评，继续努力。</p></div>
         </div>
-        <details open>
-          <summary>昨日新增评价明细（0 条）</summary>
-          <div class="review-grid"><p class='empty'>昨日无新增评价。</p></div>
-        </details>
-        <div class="panel">
-          <h3>最后：3.5分及以下需复盘内容</h3>
-          <div class="review-grid compact"><p class='empty'>非常棒！昨天没有差评，继续努力。昨日无需要单独列为改进项的 3.5 分及以下评价。</p></div>
+        <details open><summary>本月3.5分及以下需改进内容（2 条）</summary><div class="review-grid">
+      <article class="review watch">
+        <div class="review-head">
+          <div><strong>不鸣.</strong><small>2026-05-08 12:34 · 点评评价</small></div>
+          <b>3.5 分</b>
         </div>
+        <p>&lt;img src=&quot;https://p0.meituan.net/travelcube/748bbb6ce93b3410b9f55664da682f143898.png&quot; style=&quot;height: 1.2rem; width: 1.2rem; vertical-align: middle; margin: 0 2px;&quot; /&gt;口味：味道还行，没有南岸的店味道好 &lt;img src=&quot;https://p1.meituan.net/travelcube/cc64ecd71718ec343b9297244cb04e0c3029.png&quot; style=&quot;height: 1.2rem; width: 1.2rem; vertical-align: middle; margin: 0 2px;&quot; /&gt;环境：环境一般，在商圈外围 &lt;img src=&quot;https://p0.meituan.net/travelcube/e2b87d089b7c1a1f1ee3f0ac2937548f2486.png&quot; style=&quot;height: 1.2rem; width: 1.2rem; vertical-align: middle; margin: 0 2px;&quot; /&gt;服务：没感受到啥服务 &lt;img src=&quot;https://p0.meituan.net/travelcube/34a3bdee790f543e8f54f0c36b2c04294349.png&quot; style=&quot;height: 1.2rem; width: 1.2rem; vertical-align: middle; margin: 0 2px;&quot; /&gt;性价比：还可以，比较实惠 排队：人还是比较多，最高提前预订一下 ️停车：附近不是很好停车，路边停车场经常没车位了</p>
+        <div class="meta">口味 3.5 · 环境 3.5 · 服务 3.5 · 食材 3.5 · 已回复</div>
+      </article>
+    
+      <article class="review watch">
+        <div class="review-head">
+          <div><strong>grin</strong><small>2026-05-02 19:35 · 点评评价</small></div>
+          <b>0.5 分</b>
+        </div>
+        <p>服务员态度极其敷衍，极其不耐烦，随便问个什么都爱答不理的。让加汤也一直不加，不知道在装什么。狠狠避雷这家店吧</p>
+        <div class="meta">口味 1.5 · 环境 1.5 · 服务 0.5 · 食材 1.5 · 已回复</div>
+      </article>
+    </div></details>
+        <details><summary>本月近期评价明细（22 / 22 条）</summary><div class="review-grid">
+      <article class="review normal">
+        <div class="review-head">
+          <div><strong>匿名用户</strong><small>2026-05-30 22:30 · 点评评价</small></div>
+          <b>4.5 分</b>
+        </div>
+        <p>蔬菜免费吃，还是很多种类，蔬菜很好吃。那个锅超级烫，要小心，别被烫着了，别问我为什么说。因为我已经添了一道伤口。店里卫生不错。还是很干净的，阿姨服务很好，有什么需求及时处理，都非常客气，哈哈哈，可以去试试。</p>
+        <div class="meta">口味 4.5 · 环境 4.5 · 服务 4.5 · 食材 4.5 · 已回复</div>
+      </article>
+    
+      <article class="review normal">
+        <div class="review-head">
+          <div><strong>匿名用户</strong><small>2026-05-30 12:04 · 点评评价</small></div>
+          <b>3.5 分</b>
+        </div>
+        <p>&lt;img src=&quot;https://p0.meituan.net/travelcube/748bbb6ce93b3410b9f55664da682f143898.png&quot; style=&quot;height: 1.2rem; width: 1.2rem; vertical-align: middle; margin: 0 2px;&quot; /&gt;口味：口味比较喜欢，特别是煮面和泡饭特别舒服，菜品新鲜。 &lt;img src=&quot;https://p1.meituan.net/travelcube/cc64ecd71718ec343b9297244cb04e0c3029.png&quot; style=&quot;height: 1.2rem; width: 1.2rem; vertical-align: middle; margin: 0 2px;&quot; /&gt;环境：明亮干净 &lt;img src=&quot;https://p0.meituan.net/travelcube/e2b87d089b7c1a1f1ee3f0ac2937548f2486.png&quot; style=&quot;height: 1.2rem; width: 1.2rem; vertical-align: middle; margin: 0 2px;&quot; /&gt;服务：服务还行 &lt;img src=&quot;https://p0.meituan.net/travelcube/34a3bdee790f543e8f54f0c36b2c04294349.png&quot; style=&quot;height: 1.2rem; width: 1.2rem; vertical-align: middle; margin: 0 2px;&quot; /&gt;性价比：性价比还可以</p>
+        <div class="meta">口味 5 · 环境 5 · 服务 5 · 食材 5 · 已回复</div>
+      </article>
+    
+      <article class="review normal">
+        <div class="review-head">
+          <div><strong>浣熊摸鱼</strong><small>2026-05-29 20:52 · 点评评价</small></div>
+          <b>4.5 分</b>
+        </div>
+        <p>店面虽小，味道还蛮不错的。点的贵州锅底，酸酸甜甜的好开胃，食材新鲜，蛋炒饭特别好吃，不错。</p>
+        <div class="meta">口味 4.5 · 环境 4.5 · 服务 4.5 · 食材 4.5 · 已回复</div>
+      </article>
+    
+      <article class="review normal">
+        <div class="review-head">
+          <div><strong>匿名用户</strong><small>2026-05-28 10:38 · 点评评价</small></div>
+          <b>4 分</b>
+        </div>
+        <p>这家贵州豆米火锅在光环5号线地铁口不远，整体口味中规中矩。高山吊龙、木姜子小黄牛肉质新鲜，风味地道。鲜葱猪肉丸子口感扎实，手磨黑豆腐软嫩入味。遵义手工糍粑香甜软糯，贵州糟辣蛋炒饭酸辣开胃。食材分量尚可，环境整洁，整体体验平淡，适合简单聚餐。</p>
+        <div class="meta">口味 4 · 环境 4 · 服务 4 · 食材 4 · 已回复</div>
+      </article>
+    
+      <article class="review normal">
+        <div class="review-head">
+          <div><strong>匿名用户</strong><small>2026-05-26 00:12 · 美团评价</small></div>
+          <b>5 分</b>
+        </div>
+        <p>非常好吃 下次还去</p>
+        <div class="meta">口味 5 · 服务 5 · 性价比 5 · 环境 5 · 已回复</div>
+      </article>
+    
+      <article class="review normal">
+        <div class="review-head">
+          <div><strong>匿名用户</strong><small>2026-05-25 16:19 · 美团评价</small></div>
+          <b>5 分</b>
+        </div>
+        <p>这家的酸汤锅味道非常正宗，酸辣适中，汤底特别浓郁，吃得很满足。锅底很有层次感，辣得过瘾，非常推荐！(っ´▽｀)っ🍲</p>
+        <div class="meta">口味 5 · 服务 5 · 性价比 5 · 环境 5 · 已回复</div>
+      </article>
+    
+      <article class="review normal">
+        <div class="review-head">
+          <div><strong>可乐第一口修钦补缺子</strong><small>2026-05-21 22:21 · 点评评价</small></div>
+          <b>4.5 分</b>
+        </div>
+        <p>豆米火锅最最最喜欢的的点是什么？蔬菜蔬菜，蔬菜+肉肉+蔬菜，就是那种放开吃，又很好吃，又放开吃的感觉。第一次吃是去贵州，后来过年旅游到泸州也吃，再后来在重庆又吃，这个味道很适合喜欢鲜汤风味的同学，特别适合双人情侣吃。。。。因为吃完了可以相互扶着出门。</p>
+        <div class="meta">口味 4.5 · 环境 4.5 · 服务 4.5 · 食材 4.5 · 已回复</div>
+      </article>
+    
+      <article class="review normal">
+        <div class="review-head">
+          <div><strong>Shan</strong><small>2026-05-20 19:20 · 点评评价</small></div>
+          <b>5 分</b>
+        </div>
+        <p>吃过之后，感觉酸汤挺开胃的，味道刚刚好。牛肉片处理得很嫩，很容易熟。吃完之后还挺舒服的，有一种温暖的感觉。&lt;tool_call&gt; Note: The answer is designed to closely match the given instruction, focusing specifically on user&#x27;s key points and requested style, whilst ensuring the evaluation stays within the 80-character limit.</p>
+        <div class="meta">口味 5 · 环境 5 · 服务 5 · 食材 5 · 已回复</div>
+      </article>
+    
+      <article class="review normal">
+        <div class="review-head">
+          <div><strong>豁达甜美咕噜牛</strong><small>2026-05-18 20:53 · 点评评价</small></div>
+          <b>4.5 分</b>
+        </div>
+        <p>店铺就在家楼下，环境特别卫生干净整洁，菜品也很新鲜，味道巴适，强烈推荐。</p>
+        <div class="meta">口味 4.5 · 环境 4.5 · 服务 4.5 · 食材 4.5 · 已回复</div>
+      </article>
+    
+      <article class="review normal">
+        <div class="review-head">
+          <div><strong>斌帅XB</strong><small>2026-05-18 00:11 · 点评评价</small></div>
+          <b>5 分</b>
+        </div>
+        <p>不晓得什么时候突然刮起了豆米火锅的风 就来吃一下啦 &lt;img src=&quot;https://p0.meituan.net/travelcube/748bbb6ce93b3410b9f55664da682f143898.png&quot; style=&quot;height: 1.2rem; width: 1.2rem; vertical-align: middle; margin: 0 2px;&quot; /&gt;口味：「贵州红酸汤锅底」锅的味道还可以，不错 &lt;img src=&quot;https://p1.meituan.net/travelcube/cc64ecd71718ec343b9297244cb04e0c3029.png&quot; style=&quot;height: 1.2rem; width: 1.2rem; vertical-align: middle; margin: 0 2px;&quot; /&gt;环境：环境一般般吃饭吧 &lt;img src=&quot;https://p0.meituan.net/travelcube/e2b87d089b7c1a1f1ee3f0ac2937548f2486.png&quot; style=&quot;height: 1.2rem; width: 1.2rem; vertical-align: middle; margin: 0 2px;&quot; /&gt;服务：可以有很多自助的菜 &lt;img src=&quot;https://p0.meituan.net/travelcube/34a3bdee790f543e8f54f0c36b2c04294349.png&quot; style=&quot;height: 1.2rem; width: 1.2rem; vertical-align: middle; margin: 0 2px;&quot; /&gt;性价比：整体吃下来，性价比还是不错的，蔬菜自由 可以再来吃</p>
+        <div class="meta">口味 5 · 环境 5 · 服务 5 · 食材 5 · 已回复</div>
+      </article>
+    
+      <article class="review normal">
+        <div class="review-head">
+          <div><strong>小飞侠1005</strong><small>2026-05-17 19:50 · 点评评价</small></div>
+          <b>5 分</b>
+        </div>
+        <p>&lt;img src=&quot;https://p0.meituan.net/travelcube/748bbb6ce93b3410b9f55664da682f143898.png&quot; style=&quot;height: 1.2rem; width: 1.2rem; vertical-align: middle; margin: 0 2px;&quot; /&gt;口味：「贵州红酸汤锅底」太好喝了（酸度适中，超级开胃）「自助蔬菜」重庆最无敌最新鲜的素菜自助之一（不能是唯一），空心菜全是尖尖、有花生苗、汉菜、茼蒿、木耳菜、绿豆芽…..夏天据说还有水性杨花（夏天必须再来一次）。 &lt;img src=&quot;https://p1.meituan.net/travelcube/cc64ecd71718ec343b9297244cb04e0c3029.png&quot; style=&quot;height: 1.2rem; width: 1.2rem; vertical-align: middle; margin: 0 2px;&quot; /&gt;环境：位置很多，周边环境很好； &lt;img src=&quot;https://p0.meituan.net/travelcube/e2b87d089b7c1a1f1ee3f0ac2937548f2486.png&quot; style=&quot;height: 1.2rem; width: 1.2rem; vertical-align: middle; margin: 0 2px;&quot; /&gt;服务：服务很到位！</p>
+        <div class="meta">口味 5 · 环境 5 · 服务 5 · 食材 5 · 已回复</div>
+      </article>
+    
+      <article class="review normal">
+        <div class="review-head">
+          <div><strong>匿名用户</strong><small>2026-05-16 19:19 · 点评评价</small></div>
+          <b>5 分</b>
+        </div>
+        <p>之前在杨家坪吃过味道很不错，自助的素菜也很多，光环店比较宽敞也不需要排队，推荐来吃！</p>
+        <div class="meta">口味 5 · 环境 5 · 服务 5 · 食材 5 · 已回复</div>
+      </article>
+    
+      <article class="review normal">
+        <div class="review-head">
+          <div><strong>ChenyangYY023</strong><small>2026-05-10 12:46 · 美团评价</small></div>
+          <b>4 分</b>
+        </div>
+        <p>此用户没有填写评价。</p>
+        <div class="meta">口味 4 · 服务 4 · 性价比 4 · 环境 4 · 已回复</div>
+      </article>
+    
+      <article class="review watch">
+        <div class="review-head">
+          <div><strong>不鸣.</strong><small>2026-05-08 12:34 · 点评评价</small></div>
+          <b>3.5 分</b>
+        </div>
+        <p>&lt;img src=&quot;https://p0.meituan.net/travelcube/748bbb6ce93b3410b9f55664da682f143898.png&quot; style=&quot;height: 1.2rem; width: 1.2rem; vertical-align: middle; margin: 0 2px;&quot; /&gt;口味：味道还行，没有南岸的店味道好 &lt;img src=&quot;https://p1.meituan.net/travelcube/cc64ecd71718ec343b9297244cb04e0c3029.png&quot; style=&quot;height: 1.2rem; width: 1.2rem; vertical-align: middle; margin: 0 2px;&quot; /&gt;环境：环境一般，在商圈外围 &lt;img src=&quot;https://p0.meituan.net/travelcube/e2b87d089b7c1a1f1ee3f0ac2937548f2486.png&quot; style=&quot;height: 1.2rem; width: 1.2rem; vertical-align: middle; margin: 0 2px;&quot; /&gt;服务：没感受到啥服务 &lt;img src=&quot;https://p0.meituan.net/travelcube/34a3bdee790f543e8f54f0c36b2c04294349.png&quot; style=&quot;height: 1.2rem; width: 1.2rem; vertical-align: middle; margin: 0 2px;&quot; /&gt;性价比：还可以，比较实惠 排队：人还是比较多，最高提前预订一下 ️停车：附近不是很好停车，路边停车场经常没车位了</p>
+        <div class="meta">口味 3.5 · 环境 3.5 · 服务 3.5 · 食材 3.5 · 已回复</div>
+      </article>
+    
+      <article class="review normal">
+        <div class="review-head">
+          <div><strong>美美谦虚的小梦</strong><small>2026-05-05 20:10 · 点评评价</small></div>
+          <b>5 分</b>
+        </div>
+        <p>环境好，味道巴适。菜品份量足。</p>
+        <div class="meta">口味 5 · 环境 5 · 服务 5 · 食材 5 · 已回复</div>
+      </article>
+    
+      <article class="review normal">
+        <div class="review-head">
+          <div><strong>黑喵</strong><small>2026-05-05 17:39 · 点评评价</small></div>
+          <b>5 分</b>
+        </div>
+        <p>在xhs上看到推荐去的，坏境还可以不太好找，嬢嬢们都很热情，酸汤锅底蛮正宗的，蔬菜好像不限量，菜品也还可以，性价比很高，蛮推荐试一试的，我们去的时候人不算多但是也都基本坐满了，下次有机会一定会再光顾，推荐！</p>
+        <div class="meta">口味 5 · 环境 5 · 服务 5 · 食材 5 · 已回复</div>
+      </article>
+    
+      <article class="review normal">
+        <div class="review-head">
+          <div><strong>卢祎61</strong><small>2026-05-03 20:03 · 美团评价</small></div>
+          <b>5 分</b>
+        </div>
+        <p>此用户没有填写评价。</p>
+        <div class="meta">口味 5 · 服务 5 · 性价比 5 · 环境 5 · 已回复</div>
+      </article>
+    
+      <article class="review normal">
+        <div class="review-head">
+          <div><strong>qBT566819888</strong><small>2026-05-03 17:56 · 美团评价</small></div>
+          <b>5 分</b>
+        </div>
+        <p>食材新鲜，店里人很多，效率很高，上菜很快，环境干净卫生，位置就在光环商场对面的社区商业街，地方好找 看图吧，食材新鲜，决绝子</p>
+        <div class="meta">口味 5 · 服务 5 · 性价比 5 · 环境 5 · 已回复</div>
+      </article>
+    
+      <article class="review normal">
+        <div class="review-head">
+          <div><strong>用户wenn11</strong><small>2026-05-03 10:58 · 点评评价</small></div>
+          <b>4 分</b>
+        </div>
+        <p>&lt;img src=&quot;https://p0.meituan.net/travelcube/e2b87d089b7c1a1f1ee3f0ac2937548f2486.png&quot; style=&quot;height: 1.2rem; width: 1.2rem; vertical-align: middle; margin: 0 2px;&quot; /&gt;服务：服务是基本没有的，感觉前台那位短头发的女服务员态度不是很好，我们问她厕所在哪里，都是很不耐烦的语气。 三个肉都还不错的，牛肉很新鲜，豆泡虾滑也是第一次吃，很不错。 野菜都是我喜欢的种类，一次吃到爽了。</p>
+        <div class="meta">口味 4 · 环境 4 · 服务 3 · 食材 4 · 已回复</div>
+      </article>
+    
+      <article class="review watch">
+        <div class="review-head">
+          <div><strong>grin</strong><small>2026-05-02 19:35 · 点评评价</small></div>
+          <b>0.5 分</b>
+        </div>
+        <p>服务员态度极其敷衍，极其不耐烦，随便问个什么都爱答不理的。让加汤也一直不加，不知道在装什么。狠狠避雷这家店吧</p>
+        <div class="meta">口味 1.5 · 环境 1.5 · 服务 0.5 · 食材 1.5 · 已回复</div>
+      </article>
+    
+      <article class="review normal">
+        <div class="review-head">
+          <div><strong>Good66</strong><small>2026-05-02 14:00 · 美团评价</small></div>
+          <b>5 分</b>
+        </div>
+        <p>此用户没有填写评价。</p>
+        <div class="meta">口味 5 · 服务 5 · 性价比 5 · 环境 5 · 已回复</div>
+      </article>
+    
+      <article class="review normal">
+        <div class="review-head">
+          <div><strong>有伱就幸福</strong><small>2026-05-02 08:51 · 点评评价</small></div>
+          <b>4.5 分</b>
+        </div>
+        <p>第一次来光环附近的这家贵州酸汤火锅，味道真的很不错店内宽敞，特别是他家的牛肉非常新鲜，服务人员细心周到，非常不错的一次用餐之旅…… &lt;img src=&quot;https://p0.meituan.net/travelcube/748bbb6ce93b3410b9f55664da682f143898.png&quot; style=&quot;height: 1.2rem; width: 1.2rem; vertical-align: middle; margin: 0 2px;&quot; /&gt;口味：牛肉新鲜，味道很不错 &lt;img src=&quot;https://p0.meituan.net/travelcube/e2b87d089b7c1a1f1ee3f0ac2937548f2486.png&quot; style=&quot;height: 1.2rem; width: 1.2rem; vertical-align: middle; margin: 0 2px;&quot; /&gt;服务：服务人员非常周到 &lt;img src=&quot;https://p0.meituan.net/travelcube/34a3bdee790f543e8f54f0c36b2c04294349.png&quot; style=&quot;height: 1.2rem; width: 1.2rem; vertical-align: middle; margin: 0 2px;&quot; /&gt;性价比：总体来说非常满意</p>
+        <div class="meta">口味 4.5 · 环境 4.5 · 服务 4.5 · 食材 4.5 · 已回复</div>
+      </article>
+    </div></details>
       </section>
     </main>
 </body>
